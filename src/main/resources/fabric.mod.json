@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "hadesgame",
+  "version": "${version}",
+  "name": "HadesGame",
+  "license": "MIT",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "moe.caa.fabric.hadesgame.server.HadesGame"
+    ]
+  },
+  "mixins": [
+    "hadesgame.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "*"
+  }
+}
