@@ -1,8 +1,8 @@
 package moe.caa.fabric.hadesgame.server.scoreboard;
 
 import moe.caa.fabric.hadesgame.server.HadesGame;
-import moe.caa.fabric.hadesgame.server.callback.PacketSendCallback;
-import moe.caa.fabric.hadesgame.server.callback.PlayerJoinCallback;
+import moe.caa.fabric.hadesgame.server.fabric.customevent.PacketSendEvent;
+import moe.caa.fabric.hadesgame.server.fabric.customevent.PlayerJoinEvent;
 import moe.caa.fabric.hadesgame.server.schedule.AbstractTick;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 import net.minecraft.network.Packet;
@@ -117,7 +117,8 @@ public final class ScoreboardHandler extends AbstractTick {
             packet1.hg_setName(currentDisplayName);
             packet1.hg_setHgGamePacket(true);
             entity.networkHandler.sendPacket((Packet<?>) packet1);
-        } catch (Exception exception) {
+        }
+        catch (Exception exception) {
             new RuntimeException("尝试更新计分板时出现异常", exception).printStackTrace();
         }
     }
@@ -125,7 +126,7 @@ public final class ScoreboardHandler extends AbstractTick {
     public void init() {
         HadesGameScheduleManager.INSTANCE.timer.add(this);
 
-        PlayerJoinCallback.EVENT.register((playerEntity -> {
+        PlayerJoinEvent.INSTANCE.register((playerEntity -> {
             HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
                 @Override
                 protected void tick() {
@@ -134,7 +135,7 @@ public final class ScoreboardHandler extends AbstractTick {
             });
         }));
 
-        PacketSendCallback.EVENT.register((playerEntity, packet) -> {
+        PacketSendEvent.INSTANCE.register((playerEntity, packet) -> {
             if (packet instanceof IScoreboardS2CPacket) {
                 if (!((IScoreboardS2CPacket) packet).hg_isHgGamePacket()) {
                     return ActionResult.FAIL;

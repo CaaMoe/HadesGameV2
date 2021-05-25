@@ -2,8 +2,8 @@ package moe.caa.fabric.hadesgame.server.mixin;
 
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import moe.caa.fabric.hadesgame.server.callback.PacketSendCallback;
-import moe.caa.fabric.hadesgame.server.callback.PlayerQuitCallback;
+import moe.caa.fabric.hadesgame.server.fabric.customevent.PacketSendEvent;
+import moe.caa.fabric.hadesgame.server.fabric.customevent.PlayerQuitEvent;
 import net.minecraft.network.Packet;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -23,12 +23,12 @@ public abstract class MixinServerPlayNetworkHandler {
 
     @Inject(method = "onDisconnected", at = @At("HEAD"))
     private void onQuit(Text reason, CallbackInfo ci) {
-        PlayerQuitCallback.EVENT.invoker().register(player);
+        PlayerQuitEvent.INSTANCE.invoker().callback(player);
     }
 
     @Inject(method = "sendPacket(Lnet/minecraft/network/Packet;Lio/netty/util/concurrent/GenericFutureListener;)V", at = @At("HEAD"), cancellable = true)
     private void onSendPacket(Packet<?> packet, GenericFutureListener<? extends Future<? super Void>> listener, CallbackInfo ci) {
-        ActionResult result = PacketSendCallback.EVENT.invoker().register(player, packet);
+        ActionResult result = PacketSendEvent.INSTANCE.invoker().callback(player, packet);
         if (result == ActionResult.FAIL) {
             ci.cancel();
         }

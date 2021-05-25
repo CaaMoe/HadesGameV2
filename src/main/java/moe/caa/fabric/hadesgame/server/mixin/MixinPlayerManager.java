@@ -1,6 +1,6 @@
 package moe.caa.fabric.hadesgame.server.mixin;
 
-import moe.caa.fabric.hadesgame.server.callback.PlayerJoinCallback;
+import moe.caa.fabric.hadesgame.server.fabric.customevent.PlayerJoinEvent;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -14,6 +14,6 @@ public abstract class MixinPlayerManager {
 
     @Inject(method = "onPlayerConnect", at = @At("HEAD"))
     private void onConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
-        PlayerJoinCallback.EVENT.invoker().register(player);
+        PlayerJoinEvent.INSTANCE.invoker().callback(player);
     }
 }
