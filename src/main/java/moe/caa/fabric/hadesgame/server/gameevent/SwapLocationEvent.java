@@ -10,16 +10,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SwapLocationEvent extends AbstractEvent {
+public class SwapLocationEvent extends ImplicitAbstractEvent {
     public SwapLocationEvent() {
         super("swapLocation", "斗转星移", true, 60, 120);
-    }
-
-    @Override
-    public String getFormatEventName(int countdown) {
-        if (countdown >= 10)
-            return "\u00a7k********";
-        return super.EVENT_NAME;
     }
 
     @Override

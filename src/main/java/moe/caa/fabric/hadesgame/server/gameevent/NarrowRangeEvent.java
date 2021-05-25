@@ -3,16 +3,9 @@ package moe.caa.fabric.hadesgame.server.gameevent;
 import moe.caa.fabric.hadesgame.server.HadesGame;
 import net.minecraft.world.border.WorldBorder;
 
-public class NarrowRangeEvent extends AbstractEvent {
+public class NarrowRangeEvent extends ImplicitAbstractEvent {
     public NarrowRangeEvent() {
         super("narrowRange", "缩圈", true, 60, 120);
-    }
-
-    @Override
-    public String getFormatEventName(int countdown) {
-        if (countdown >= 10)
-            return "\u00a7k********";
-        return super.EVENT_NAME;
     }
 
     @Override

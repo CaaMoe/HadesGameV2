@@ -10,16 +10,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SwapHealthEvent extends AbstractEvent {
+public class SwapHealthEvent extends ImplicitAbstractEvent {
     public SwapHealthEvent() {
         super("swapHealth", "生命互换", true, 60, 120);
-    }
-
-    @Override
-    public String getFormatEventName(int countdown) {
-        if (countdown >= 10)
-            return "\u00a7k********";
-        return super.EVENT_NAME;
     }
 
     @Override

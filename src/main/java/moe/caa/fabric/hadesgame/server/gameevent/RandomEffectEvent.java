@@ -4,16 +4,9 @@ import moe.caa.fabric.hadesgame.server.GameCore;
 import moe.caa.fabric.hadesgame.server.HadesGame;
 import net.minecraft.entity.effect.StatusEffectInstance;
 
-public class RandomEffectEvent extends AbstractEvent {
+public class RandomEffectEvent extends ImplicitAbstractEvent {
     public RandomEffectEvent() {
         super("randomEffect", "随机效果", true, 60, 120);
-    }
-
-    @Override
-    public String getFormatEventName(int countdown) {
-        if (countdown >= 10)
-            return "\u00a7k********";
-        return super.EVENT_NAME;
     }
 
     @Override
