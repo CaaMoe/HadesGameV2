@@ -42,6 +42,17 @@ public abstract class AbstractEvent {
         }
     }
 
+    /**
+     * 获取格式化的事件名称, 默认是事件名. 由于设计上的原因
+     * 大多数时候格式化名称会随着倒计时改变, 所以默认countdown
+     * 参数是必须的, 但也有特例.
+     *
+     * @param countdown 距离事件发生的时间, 单位秒
+     * @return 事件名称
+     *
+     * @see moe.caa.fabric.hadesgame.server.gameevent.coreevent
+     * @see ImplicitAbstractEvent
+     */
     public String getFormatEventName(int countdown) {
         return EVENT_NAME;
     }

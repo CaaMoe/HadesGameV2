@@ -10,16 +10,9 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.Random;
 
-public class RainAnvilEvent extends AbstractEvent {
+public class RainAnvilEvent extends ImplicitAbstractEvent {
     public RainAnvilEvent() {
         super("rainAnvil", "铁砧雨", true, 60, 120);
-    }
-
-    @Override
-    public String getFormatEventName(int countdown) {
-        if (countdown >= 10)
-            return "\u00a7k********";
-        return super.EVENT_NAME;
     }
 
     @Override

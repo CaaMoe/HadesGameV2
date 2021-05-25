@@ -4,16 +4,9 @@ import moe.caa.fabric.hadesgame.server.GameCore;
 import moe.caa.fabric.hadesgame.server.HgPlayerInventory;
 import net.minecraft.item.ItemStack;
 
-public class RandomClearInventorySectionEvent extends AbstractEvent {
+public class RandomClearInventorySectionEvent extends ImplicitAbstractEvent {
     public RandomClearInventorySectionEvent() {
         super("randomClearItem", "随机掉落背包", true, 60, 120);
-    }
-
-    @Override
-    public String getFormatEventName(int countdown) {
-        if (countdown >= 10)
-            return "\u00a7k********";
-        return super.EVENT_NAME;
     }
 
     @Override

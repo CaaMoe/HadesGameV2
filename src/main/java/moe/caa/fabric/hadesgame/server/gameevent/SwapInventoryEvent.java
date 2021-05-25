@@ -10,16 +10,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SwapInventoryEvent extends AbstractEvent {
+public class SwapInventoryEvent extends ImplicitAbstractEvent {
     public SwapInventoryEvent() {
         super("swapInventory", "背包互换", true, 60, 120);
-    }
-
-    @Override
-    public String getFormatEventName(int countdown) {
-        if (countdown >= 10)
-            return "\u00a7k********";
-        return super.EVENT_NAME;
     }
 
     @Override
