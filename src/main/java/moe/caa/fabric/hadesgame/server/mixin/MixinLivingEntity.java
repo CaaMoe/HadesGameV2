@@ -1,6 +1,6 @@
 package moe.caa.fabric.hadesgame.server.mixin;
 
-import moe.caa.fabric.hadesgame.server.callback.LivingEntityChangeHealthCallback;
+import moe.caa.fabric.hadesgame.server.fabric.customevent.LivingEntityChangeHealthEvent;
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,6 +12,6 @@ public abstract class MixinLivingEntity {
 
     @Inject(method = "setHealth", at = @At("RETURN"))
     private void onChangeHealth(float health, CallbackInfo ci) {
-        LivingEntityChangeHealthCallback.EVENT.invoker().register((LivingEntity) (Object) this, health);
+        LivingEntityChangeHealthEvent.INSTANCE.invoker().callback((LivingEntity) (Object) this, health);
     }
 }

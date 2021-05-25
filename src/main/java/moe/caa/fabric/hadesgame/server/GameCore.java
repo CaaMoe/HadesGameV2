@@ -1,8 +1,8 @@
 package moe.caa.fabric.hadesgame.server;
 
-import moe.caa.fabric.hadesgame.server.callback.LivingEntityChangeHealthCallback;
-import moe.caa.fabric.hadesgame.server.callback.PlayerJoinCallback;
-import moe.caa.fabric.hadesgame.server.callback.PlayerQuitCallback;
+import moe.caa.fabric.hadesgame.server.fabric.customevent.LivingEntityChangeHealthEvent;
+import moe.caa.fabric.hadesgame.server.fabric.customevent.PlayerJoinEvent;
+import moe.caa.fabric.hadesgame.server.fabric.customevent.PlayerQuitEvent;
 import moe.caa.fabric.hadesgame.server.gameevent.AbstractEvent;
 import moe.caa.fabric.hadesgame.server.gameevent.coreevent.GameEndingEvent;
 import moe.caa.fabric.hadesgame.server.gameevent.coreevent.GameStartingEvent;
@@ -59,13 +59,15 @@ public class GameCore extends AbstractTick {
                 allPlayerHandler(playerEntity -> teleport(playerEntity, HadesGame.getLobbyLocation()));
                 clearWorld();
             }
-        } else if (currentState == GameState.STARTING) {
+        }
+        else if (currentState == GameState.STARTING) {
             if (isSwapState) {
                 setEvent(new GameStartingEvent());
             }
-        } else if (currentState == GameState.GAMING) {
+        }
+        else if (currentState == GameState.GAMING) {
             if (currentSurvivalPlayerNumber <= 1) {
-                 endGame();
+                endGame();
             }
         }
 
@@ -268,7 +270,8 @@ public class GameCore extends AbstractTick {
     public <T> void runPrintException(T obj, Consumer<T> consumer) {
         try {
             consumer.accept(obj);
-        } catch (Exception exception) {
+        }
+        catch (Exception exception) {
             exception.printStackTrace();
         }
     }
@@ -282,21 +285,22 @@ public class GameCore extends AbstractTick {
 
 
         // 游戏加入和退出
-        PlayerJoinCallback.EVENT.register(player -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
+        PlayerJoinEvent.INSTANCE.register(player -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
             @Override
             protected void tick() {
                 ServerWorld world = HadesGame.server.get().getOverworld();
                 if (currentState == GameState.WAITING || currentState == GameState.STARTING) {
                     clearState(player, GameMode.ADVENTURE);
                     teleport(player, HadesGame.getLobbyLocation());
-                } else {
+                }
+                else {
                     clearState(player, GameMode.SPECTATOR);
                     teleport(player, new Location(new Vec3d(world.getWorldBorder().getCenterX(), 200, world.getWorldBorder().getCenterZ()), world, 0, 0));
                 }
             }
         }));
 
-        LivingEntityChangeHealthCallback.EVENT.register((livingEntity, newHealth) -> {
+        LivingEntityChangeHealthEvent.INSTANCE.register((livingEntity, newHealth) -> {
             if (livingEntity instanceof ServerPlayerEntity) {
                 ServerWorld world = HadesGame.server.get().getOverworld();
                 if (currentState == GameState.GAMING) {
@@ -308,7 +312,8 @@ public class GameCore extends AbstractTick {
                             teleport((ServerPlayerEntity) livingEntity, new Location(new Vec3d(livingEntity.getX(), 200, livingEntity.getZ()), world, 0, 0));
                         }
                     }
-                } else {
+                }
+                else {
                     if (livingEntity.getHealth() != 20f) {
                         livingEntity.setHealth(20f);
                     }
@@ -317,21 +322,21 @@ public class GameCore extends AbstractTick {
         });
 
         // 这堆事件只处理计算生存人数
-        PlayerJoinCallback.EVENT.register(playerEntity -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
+        PlayerJoinEvent.INSTANCE.register(playerEntity -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
             @Override
             protected void tick() {
                 reBuildSurvivalNumber();
             }
         }));
 
-        PlayerQuitCallback.EVENT.register(playerEntity -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
+        PlayerQuitEvent.INSTANCE.register(playerEntity -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
             @Override
             protected void tick() {
                 reBuildSurvivalNumber();
             }
         }));
 
-        LivingEntityChangeHealthCallback.EVENT.register((livingEntity, newHealth) -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
+        LivingEntityChangeHealthEvent.INSTANCE.register((livingEntity, newHealth) -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
             @Override
             protected void tick() {
                 reBuildSurvivalNumber();
