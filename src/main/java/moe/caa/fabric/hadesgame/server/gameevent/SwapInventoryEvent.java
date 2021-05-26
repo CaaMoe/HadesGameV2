@@ -17,7 +17,7 @@ public class SwapInventoryEvent extends ImplicitAbstractEvent {
 
     @Override
     public void callEvent() {
-        List<ServerPlayerEntity> entities = GameCore.INSTANCE.getSurvivalPlayer();
+        List<ServerPlayerEntity> entities = GameCore.INSTANCE.getSurvivalPlayers();
         Collections.shuffle(entities);
 
         LinkedList<HgPlayerInventory> inventories = entities.stream().map(HgPlayerInventory::valueOf).map(HgPlayerInventory::clone).collect(Collectors.toCollection(LinkedList::new));

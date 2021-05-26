@@ -17,7 +17,7 @@ public class SwapHealthEvent extends ImplicitAbstractEvent {
 
     @Override
     public void callEvent() {
-        List<ServerPlayerEntity> entities = GameCore.INSTANCE.getSurvivalPlayer();
+        List<ServerPlayerEntity> entities = GameCore.INSTANCE.getSurvivalPlayers();
         Collections.shuffle(entities);
 
         LinkedList<Float> healths = entities.stream().map(PlayerEntity::getHealth).collect(Collectors.toCollection(LinkedList::new));

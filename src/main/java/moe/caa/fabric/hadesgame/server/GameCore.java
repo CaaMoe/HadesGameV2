@@ -195,7 +195,7 @@ public class GameCore extends AbstractTick {
 
     // 操作生存玩家
     public final void survivalPlayerHandler(Consumer<ServerPlayerEntity> consumer) {
-        List<ServerPlayerEntity> list = getSurvivalPlayer();
+        List<ServerPlayerEntity> list = getSurvivalPlayers();
         for (int i = 0; i < list.size(); i++) {
             runPrintException(list.get(i), consumer);
         }
@@ -222,7 +222,7 @@ public class GameCore extends AbstractTick {
     public void endGame() {
         setEvent(new GameEndingEvent());
         currentState = GameState.ENDING;
-        ServerPlayerEntity target = getSurvivalPlayer().stream().findFirst().orElse(null);
+        ServerPlayerEntity target = getSurvivalPlayers().stream().findFirst().orElse(null);
 
         allPlayerHandler(p -> {
             p.sendMessage(new LiteralText("\u00a7c\u00a7l游戏结束"), false);
@@ -251,7 +251,7 @@ public class GameCore extends AbstractTick {
     }
 
     // 获得所有生存玩家
-    public final List<ServerPlayerEntity> getSurvivalPlayer() {
+    public final List<ServerPlayerEntity> getSurvivalPlayers() {
         return HadesGame.server.get().getPlayerManager().getPlayerList().stream()
                 .filter(serverPlayerEntity -> serverPlayerEntity.interactionManager.getGameMode() != GameMode.SPECTATOR)
                 .collect(Collectors.toList());
@@ -277,7 +277,7 @@ public class GameCore extends AbstractTick {
     }
 
     public void reBuildSurvivalNumber() {
-        currentSurvivalPlayerNumber = getSurvivalPlayer().size();
+        currentSurvivalPlayerNumber = getSurvivalPlayers().size();
     }
 
     protected void init() {

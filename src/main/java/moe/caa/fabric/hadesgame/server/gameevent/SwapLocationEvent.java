@@ -17,7 +17,7 @@ public class SwapLocationEvent extends ImplicitAbstractEvent {
 
     @Override
     public void callEvent() {
-        List<ServerPlayerEntity> entities = GameCore.INSTANCE.getSurvivalPlayer();
+        List<ServerPlayerEntity> entities = GameCore.INSTANCE.getSurvivalPlayers();
         Collections.shuffle(entities);
 
         LinkedList<Location> locations = entities.stream().map(Location::valueOf).map(Location::clone).collect(Collectors.toCollection(LinkedList::new));
