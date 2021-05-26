@@ -73,4 +73,9 @@ public class GameStartingEvent extends AbstractEvent {
         int y = world.getTopY(Heightmap.Type.MOTION_BLOCKING, x, z);
         return new int[]{x, y, z};
     }
+
+    @Override
+    public double getFakeEventProb() {
+        return 0;
+    }
 }

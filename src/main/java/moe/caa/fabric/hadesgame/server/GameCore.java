@@ -111,7 +111,11 @@ public class GameCore extends AbstractTick {
             if (nextEvent.SHOULD_COUNTDOWN)
                 nextEvent.tickCountdownSecond(currentCountdown);
             if (currentCountdown == 0) {
-                runPrintException(nextEvent, AbstractEvent::callEvent);
+                if(nextEvent.getFakeEventProb() < Math.random()){
+                    runPrintException(nextEvent, AbstractEvent::callEvent);
+                } else {
+                    // TODO: 2021/5/26 这里需要添加向玩家发送或播放假事件嘲讽的讯息 ？
+                }
                 nextEvent();
             }
         }

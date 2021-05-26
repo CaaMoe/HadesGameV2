@@ -31,4 +31,9 @@ public class GameEndingEvent extends AbstractEvent {
     public AbstractEvent getNextEvent() {
         return new GameWaitingEvent();
     }
+
+    @Override
+    public double getFakeEventProb() {
+        return 0;
+    }
 }

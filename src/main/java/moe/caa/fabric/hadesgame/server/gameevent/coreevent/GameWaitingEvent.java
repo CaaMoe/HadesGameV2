@@ -16,4 +16,9 @@ public class GameWaitingEvent extends AbstractEvent {
     public void callEvent() {
 
     }
+
+    @Override
+    public double getFakeEventProb() {
+        return 0;
+    }
 }

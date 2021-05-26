@@ -62,6 +62,17 @@ public abstract class AbstractEvent {
         return String.format("%02d:%02d", countdown / 60, countdown % 60);
     }
 
+    /**
+     * 获取假事件概率，方法返回值应在区间[0,1]内，值越大，假事件几率越大
+     *
+     * @return 假事件几率
+     *
+     * @see moe.caa.fabric.hadesgame.server.gameevent.coreevent
+     */
+    public double getFakeEventProb(){
+        return 0.1;
+    }
+
     public AbstractEvent getNextEvent() {
         return null;
     }
