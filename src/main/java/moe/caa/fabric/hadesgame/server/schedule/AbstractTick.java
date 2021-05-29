@@ -3,6 +3,7 @@ package moe.caa.fabric.hadesgame.server.schedule;
 public abstract class AbstractTick {
     protected final int PERIOD;
     private int tickNumber = 0;
+    private boolean cancel = false;
 
     public AbstractTick(int period) {
         PERIOD = period;
@@ -24,4 +25,12 @@ public abstract class AbstractTick {
     }
 
     protected abstract void tick();
+
+    public void cancel(){
+        this.cancel = true;
+    }
+
+    public boolean isCancel() {
+        return cancel;
+    }
 }

@@ -31,7 +31,9 @@ public class HadesGameScheduleManager {
         while (delayRunTaskItr.hasNext()) {
             Map.Entry<AbstractTick, Integer> next = delayRunTaskItr.next();
             if (next.getValue() <= 0) {
-                GameCore.INSTANCE.runPrintException(next.getKey(), AbstractTick::tick0);
+                if(!next.getKey().isCancel()){
+                    GameCore.INSTANCE.runPrintException(next.getKey(), AbstractTick::tick0);
+                }
                 delayRunTaskItr.remove();
             }
             next.setValue(next.getValue() - 1);
@@ -39,9 +41,12 @@ public class HadesGameScheduleManager {
 
         AbstractTick tickTask;
         while ((tickTask = runTask.poll()) != null) {
-            GameCore.INSTANCE.runPrintException(tickTask, AbstractTick::tick0);
+            if(!tickTask.isCancel()){
+                GameCore.INSTANCE.runPrintException(tickTask, AbstractTick::tick0);
+            }
         }
 
+        timer.removeIf(AbstractTick::isCancel);
 
         for (AbstractTick tick : timer) {
             GameCore.INSTANCE.runPrintException(tick, AbstractTick::tick0);
