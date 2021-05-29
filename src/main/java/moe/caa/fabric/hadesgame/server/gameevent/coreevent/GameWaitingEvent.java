@@ -1,8 +1,6 @@
 package moe.caa.fabric.hadesgame.server.gameevent.coreevent;
 
-import moe.caa.fabric.hadesgame.server.gameevent.AbstractEvent;
-
-public class GameWaitingEvent extends AbstractEvent {
+public class GameWaitingEvent extends CoreAbstractEvent {
     public GameWaitingEvent() {
         super("waiting", "等待指令", false, 0, 0);
     }
@@ -15,10 +13,5 @@ public class GameWaitingEvent extends AbstractEvent {
     @Override
     public void callEvent() {
 
-    }
-
-    @Override
-    public double getFakeEventProb() {
-        return 0;
     }
 }

@@ -6,7 +6,7 @@ import moe.caa.fabric.hadesgame.server.HadesGame;
 import moe.caa.fabric.hadesgame.server.gameevent.AbstractEvent;
 import net.minecraft.world.GameMode;
 
-public class GameEndingEvent extends AbstractEvent {
+public class GameEndingEvent extends CoreAbstractEvent {
     public GameEndingEvent() {
         super("returnToLobby", "返回大厅", true, 15, 17);
     }
@@ -30,10 +30,5 @@ public class GameEndingEvent extends AbstractEvent {
     @Override
     public AbstractEvent getNextEvent() {
         return new GameWaitingEvent();
-    }
-
-    @Override
-    public double getFakeEventProb() {
-        return 0;
     }
 }

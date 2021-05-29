@@ -3,6 +3,7 @@ package moe.caa.fabric.hadesgame.server.gameevent;
 
 /**
  * 继承该类的事件直到快要发生时才会在计分板显示自己的名称
+ *
  * @see moe.caa.fabric.hadesgame.server.gameevent.AbstractEvent
  */
 public abstract class ImplicitAbstractEvent extends AbstractEvent {
@@ -19,5 +20,10 @@ public abstract class ImplicitAbstractEvent extends AbstractEvent {
         if (countdown >= limit)
             return "\u00a7k********";
         return EVENT_NAME;
+    }
+
+    @Override
+    public double getFakeEventProb() {
+        return 0.1;
     }
 }

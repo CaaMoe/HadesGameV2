@@ -42,40 +42,34 @@ public abstract class AbstractEvent {
         }
     }
 
-    /**
-     * 获取格式化的事件名称, 默认是事件名. 由于设计上的原因
-     * 大多数时候格式化名称会随着倒计时改变, 所以默认countdown
-     * 参数是必须的, 但也有特例.
-     *
-     * @param countdown 距离事件发生的时间, 单位秒
-     * @return 事件名称
-     *
-     * @see moe.caa.fabric.hadesgame.server.gameevent.coreevent
-     * @see ImplicitAbstractEvent
-     */
-    public String getFormatEventName(int countdown) {
-        return EVENT_NAME;
-    }
-
     // 获取格式化的倒计时
     public String getFormatCountDown(int countdown) {
         return String.format("%02d:%02d", countdown / 60, countdown % 60);
     }
 
+    public AbstractEvent getNextEvent() {
+        return null;
+    }
+
+    /**
+     * 根据事件发生倒计时获取格式化的事件名称
+     * 对于CoreEvent始终是事件名称本身
+     * 对于ImplicitEvent会根据距离事件发生的时间改变
+     *
+     * @param countdown 距离事件发生的时间, 单位秒
+     * @return 事件名称
+     * @see moe.caa.fabric.hadesgame.server.gameevent.coreevent
+     * @see ImplicitAbstractEvent
+     */
+    public abstract String getFormatEventName(int countdown);
+
     /**
      * 获取假事件概率，方法返回值应在区间[0,1]内，值越大，假事件几率越大
      *
      * @return 假事件几率
-     *
      * @see moe.caa.fabric.hadesgame.server.gameevent.coreevent
      */
-    public double getFakeEventProb(){
-        return 0.1;
-    }
-
-    public AbstractEvent getNextEvent() {
-        return null;
-    }
+    public abstract double getFakeEventProb();
 
     public abstract void callEvent();
 }

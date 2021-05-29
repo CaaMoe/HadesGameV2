@@ -3,7 +3,6 @@ package moe.caa.fabric.hadesgame.server.gameevent.coreevent;
 import moe.caa.fabric.hadesgame.server.GameCore;
 import moe.caa.fabric.hadesgame.server.GameState;
 import moe.caa.fabric.hadesgame.server.HadesGame;
-import moe.caa.fabric.hadesgame.server.gameevent.AbstractEvent;
 import moe.caa.fabric.hadesgame.server.schedule.AbstractTick;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -17,7 +16,7 @@ import net.minecraft.world.Heightmap;
 
 import java.util.Random;
 
-public class GameStartingEvent extends AbstractEvent {
+public class GameStartingEvent extends CoreAbstractEvent {
     public GameStartingEvent() {
         super("starting", "开始游戏", true, 18, 20);
     }
@@ -60,7 +59,7 @@ public class GameStartingEvent extends AbstractEvent {
                     GameCore.INSTANCE.clearState(playerEntity, GameMode.SURVIVAL);
                     playerEntity.setGameMode(GameMode.SURVIVAL);
                     GameCore.INSTANCE.playSound(playerEntity, SoundEvents.ENTITY_CHICKEN_HURT, SoundCategory.PLAYERS, 10, 1);
-                    playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH ,20 * 60 * 2, 2));
+                    playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 20 * 60 * 2, 2));
                 }
             });
         });
@@ -72,10 +71,5 @@ public class GameStartingEvent extends AbstractEvent {
         int z = -20000000 + random.nextInt(40000000);
         int y = world.getTopY(Heightmap.Type.MOTION_BLOCKING, x, z);
         return new int[]{x, y, z};
-    }
-
-    @Override
-    public double getFakeEventProb() {
-        return 0;
     }
 }
