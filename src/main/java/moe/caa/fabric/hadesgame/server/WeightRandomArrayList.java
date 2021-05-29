@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 public class WeightRandomArrayList<T> {
-    private final ArrayList<Entry<T>> resource = new ArrayList<>();
+    public final ArrayList<Entry<T>> resource = new ArrayList<>();
     private final Random RANDOM = new Random();
     private int weightSum = 0;
 

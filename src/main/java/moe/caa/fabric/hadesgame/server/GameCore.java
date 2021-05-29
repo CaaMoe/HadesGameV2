@@ -220,6 +220,10 @@ public class GameCore extends AbstractTick {
         GameCore.INSTANCE.currentState = GameState.WAITING;
         setEvent(new GameWaitingEvent());
         clearWorld();
+
+        for (WeightRandomArrayList.Entry<AbstractEvent> entry : eventList.resource) {
+            entry.value.gameEnd();
+        }
     }
 
     // 结束游戏
@@ -236,6 +240,11 @@ public class GameCore extends AbstractTick {
             clearState(p, GameMode.SPECTATOR);
         });
         clearWorld();
+
+        for (WeightRandomArrayList.Entry<AbstractEvent> entry : eventList.resource) {
+            entry.value.gameEnd();
+        }
+
     }
 
     // 下一事件

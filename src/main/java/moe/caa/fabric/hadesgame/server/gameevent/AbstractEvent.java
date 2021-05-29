@@ -72,4 +72,12 @@ public abstract class AbstractEvent {
     public abstract double getFakeEventProb();
 
     public abstract void callEvent();
+
+    /**
+     * 当游戏被终止时，GameCore会尝试遍历EventList字段的所有事件并调用这个方法，以供事件注销自己的所有待执行任务
+     * 仅注册事件有效，核心事件无效
+     *
+     * @see moe.caa.fabric.hadesgame.server.HadesGame
+     */
+    public void gameEnd(){}
 }
