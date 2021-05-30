@@ -7,7 +7,7 @@ import java.util.*;
 
 public class HadesGameScheduleManager {
     public static final HadesGameScheduleManager INSTANCE = new HadesGameScheduleManager();
-    public final LinkedList<AbstractTick> timer = new LinkedList<>();
+    public final List<AbstractTick> timer = Collections.synchronizedList(new LinkedList<>());
     public final LinkedList<AbstractTick> runTask = new LinkedList<>();
     public final Map<AbstractTick, Integer> delayTimer = Collections.synchronizedMap(new HashMap<>());
     public final Map<AbstractTick, Integer> delayRunTask = Collections.synchronizedMap(new HashMap<>());
@@ -21,7 +21,7 @@ public class HadesGameScheduleManager {
         while (timerItr.hasNext()) {
             Map.Entry<AbstractTick, Integer> next = timerItr.next();
             if (next.getValue() <= 0) {
-                timer.offer(next.getKey());
+                timer.add(next.getKey());
                 timerItr.remove();
             }
             next.setValue(next.getValue() - 1);
@@ -65,7 +65,7 @@ public class HadesGameScheduleManager {
     }
 
     public static void runTaskLater(AbstractTick task, int later){
-        INSTANCE.delayRunTask.put(task, later);
+        runTask(()->INSTANCE.delayRunTask.put(task, later));
     }
 
     public static AbstractTick runTaskLater(Runnable runnable, int later){
@@ -84,7 +84,7 @@ public class HadesGameScheduleManager {
     }
 
     public static void runTaskTimer(AbstractTick task){
-        INSTANCE.timer.add(task);
+        runTask(()-> INSTANCE.timer.add(task));
     }
 
     public static void runTaskTimerLater(AbstractTick task, int later){

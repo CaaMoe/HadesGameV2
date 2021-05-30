@@ -5,88 +5,48 @@ import moe.caa.fabric.hadesgame.server.HadesGame;
 import moe.caa.fabric.hadesgame.server.schedule.AbstractTick;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 import net.minecraft.block.Blocks;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Heightmap;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class RainAnvilEvent extends ImplicitAbstractEvent {
+    private List<AbstractTick> eventTick = new ArrayList<>();
+
     public RainAnvilEvent() {
         super("rainAnvil", "铁砧雨", true, 60, 120);
     }
 
     @Override
     public void callEvent() {
-        Random random = new Random();
-        ServerWorld world = HadesGame.server.get().getOverworld();
+        AbstractTick tick = new AbstractTick(20) {
+            private int count = 0;
 
+            @Override
+            protected void tick() {
+                count++;
+                GameCore.INSTANCE.survivalPlayerHandler(player -> generateAnvil(player));
+                if(count > 60) cancel();
+            }
+        };
 
-        GameCore.INSTANCE.survivalPlayerHandler(player -> {
-            double x = player.getPos().x - 2 + random.nextInt(4);
-            double z = player.getPos().z - 2 + random.nextInt(4);
+        HadesGameScheduleManager.runTaskTimer(tick);
+        eventTick.add(tick);
+    }
 
-            world.setBlockState(new BlockPos(x, 300, z), Blocks.ANVIL.getDefaultState());
-            world.updateNeighbors(new BlockPos(x, 300, z), Blocks.ANVIL);
+    public void generateAnvil(ServerPlayerEntity entity){
+        ServerWorld world = entity.getServerWorld();
+        int spawnY = (int) Math.max(entity.getY() + 10, world.getTopY(Heightmap.Type.MOTION_BLOCKING, (int )entity.getX(), (int)entity.getZ()) + 10);
+        world.setBlockState(new BlockPos(entity.getX(), spawnY, entity.getZ()), Blocks.ANVIL.getDefaultState());
+        world.updateNeighbors(new BlockPos(entity.getX(), spawnY, entity.getZ()), Blocks.ANVIL);
+    }
 
-            HadesGameScheduleManager.INSTANCE.delayRunTask.put(new AbstractTick() {
-                @Override
-                protected void tick() {
-                    double x = player.getPos().x - 2 + random.nextInt(4);
-                    double z = player.getPos().z - 2 + random.nextInt(4);
-
-                    world.setBlockState(new BlockPos(x, 250, z), Blocks.ANVIL.getDefaultState());
-
-                    world.updateNeighbors(new BlockPos(x, 250, z), Blocks.ANVIL);
-                }
-            }, 20);
-
-            HadesGameScheduleManager.INSTANCE.delayRunTask.put(new AbstractTick() {
-                @Override
-                protected void tick() {
-                    double x = player.getPos().x - 2 + random.nextInt(4);
-                    double z = player.getPos().z - 2 + random.nextInt(4);
-
-                    world.setBlockState(new BlockPos(x, 250, z), Blocks.ANVIL.getDefaultState());
-
-                    world.updateNeighbors(new BlockPos(x, 250, z), Blocks.ANVIL);
-                }
-            }, 40);
-
-            HadesGameScheduleManager.INSTANCE.delayRunTask.put(new AbstractTick() {
-                @Override
-                protected void tick() {
-                    double x = player.getPos().x - 2 + random.nextInt(4);
-                    double z = player.getPos().z - 2 + random.nextInt(4);
-
-                    world.setBlockState(new BlockPos(x, 250, z), Blocks.ANVIL.getDefaultState());
-
-                    world.updateNeighbors(new BlockPos(x, 250, z), Blocks.ANVIL);
-                }
-            }, 60);
-
-            HadesGameScheduleManager.INSTANCE.delayRunTask.put(new AbstractTick() {
-                @Override
-                protected void tick() {
-                    double x = player.getPos().x - 2 + random.nextInt(4);
-                    double z = player.getPos().z - 2 + random.nextInt(4);
-
-                    world.setBlockState(new BlockPos(x, 250, z), Blocks.ANVIL.getDefaultState());
-
-                    world.updateNeighbors(new BlockPos(x, 250, z), Blocks.ANVIL);
-                }
-            }, 80);
-
-            HadesGameScheduleManager.INSTANCE.delayRunTask.put(new AbstractTick() {
-                @Override
-                protected void tick() {
-                    double x = player.getPos().x - 2 + random.nextInt(4);
-                    double z = player.getPos().z - 2 + random.nextInt(4);
-
-                    world.setBlockState(new BlockPos(x, 250, z), Blocks.ANVIL.getDefaultState());
-
-                    world.updateNeighbors(new BlockPos(x, 250, z), Blocks.ANVIL);
-                }
-            }, 100);
-        });
+    @Override
+    public void gameEnd() {
+        eventTick.forEach(AbstractTick::cancel);
     }
 }
