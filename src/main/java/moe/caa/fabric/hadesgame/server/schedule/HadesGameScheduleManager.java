@@ -53,6 +53,66 @@ public class HadesGameScheduleManager {
         }
     }
 
+    public static AbstractTick runTask(Runnable runnable){
+        AbstractTick ret = new AbstractTick() {
+            @Override
+            protected void tick() {
+                runnable.run();
+            }
+        };
+        runTask(ret);
+        return ret;
+    }
+
+    public static void runTaskLater(AbstractTick task, int later){
+        INSTANCE.delayRunTask.put(task, later);
+    }
+
+    public static AbstractTick runTaskLater(Runnable runnable, int later){
+        AbstractTick ret = new AbstractTick() {
+            @Override
+            protected void tick() {
+                runnable.run();
+            }
+        };
+        runTaskLater(ret, later);
+        return ret;
+    }
+
+    public static void runTask(AbstractTick task){
+        INSTANCE.runTask.add(task);
+    }
+
+    public static void runTaskTimer(AbstractTick task){
+        INSTANCE.timer.add(task);
+    }
+
+    public static void runTaskTimerLater(AbstractTick task, int later){
+        INSTANCE.delayTimer.put(task, later);
+    }
+
+    public static AbstractTick runTaskTimer(Runnable runnable){
+        AbstractTick ret = new AbstractTick() {
+            @Override
+            protected void tick() {
+                runnable.run();
+            }
+        };
+        runTaskTimer(ret);
+        return ret;
+    }
+
+    public static AbstractTick runTaskTimerLater(Runnable runnable, int later){
+        AbstractTick ret = new AbstractTick() {
+            @Override
+            protected void tick() {
+                runnable.run();
+            }
+        };
+        runTaskTimerLater(ret, later);
+        return ret;
+    }
+
     public void init() {
         ServerTickEvents.START_SERVER_TICK.register(server -> {
             tick();
