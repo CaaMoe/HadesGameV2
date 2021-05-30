@@ -10,9 +10,12 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.Heightmap;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class ThunderstormEvent extends ImplicitAbstractEvent {
+    private final List<AbstractTick> eventTick = new ArrayList<>();
     public ThunderstormEvent() {
         super("thunderstorm", "雷暴", true, 60, 120);
     }
@@ -21,23 +24,19 @@ public class ThunderstormEvent extends ImplicitAbstractEvent {
     public void callEvent() {
         Random random = new Random();
 
-        GameCore.INSTANCE.survivalPlayerHandler(player -> {
-            generateLightBolts(random, player);
+        AbstractTick tick = new AbstractTick(40) {
+            private int count = 0;
 
-            HadesGameScheduleManager.INSTANCE.delayRunTask.put(new AbstractTick() {
-                @Override
-                protected void tick() {
-                    generateLightBolts(random, player);
-                }
-            }, 40);
+            @Override
+            protected void tick() {
+                count++;
+                GameCore.INSTANCE.survivalPlayerHandler(player -> generateLightBolts(random, player));
+                if(count > 10) cancel();
+            }
+        };
 
-            HadesGameScheduleManager.INSTANCE.delayRunTask.put(new AbstractTick() {
-                @Override
-                protected void tick() {
-                    generateLightBolts(random, player);
-                }
-            }, 80);
-        });
+        HadesGameScheduleManager.runTaskTimer(tick);
+        eventTick.add(tick);
     }
 
     private void generateLightBolts(Random random, ServerPlayerEntity player) {
@@ -54,5 +53,12 @@ public class ThunderstormEvent extends ImplicitAbstractEvent {
         });
 
         ((ServerWorld) player.world).shouldCreateNewEntityWithPassenger(entity2);
+    }
+
+
+    @Override
+    public void gameEnd() {
+        eventTick.forEach(AbstractTick::cancel);
+        eventTick.clear();
     }
 }
