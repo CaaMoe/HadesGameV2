@@ -100,7 +100,7 @@ public class HadesGame implements ModInitializer {
         // 物品雨
         GameCore.INSTANCE.eventList.add(new RainItemsEvent(), 1);
 
-        // 随机背包掉落
+        // 背包破损
         GameCore.INSTANCE.eventList.add(new RandomClearInventorySectionEvent(), 4);
 
 
