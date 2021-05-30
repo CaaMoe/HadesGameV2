@@ -14,6 +14,7 @@ import java.util.Random;
 
 public class RainItemsEvent extends ImplicitAbstractEvent {
     private final List<AbstractTick> eventTick = new ArrayList<>();
+
     public RainItemsEvent() {
         super("rainItem", "物品雨", true, 60, 120);
     }
@@ -29,7 +30,7 @@ public class RainItemsEvent extends ImplicitAbstractEvent {
             protected void tick() {
                 count++;
                 GameCore.INSTANCE.survivalPlayerHandler(player -> generateItems(random, player));
-                if(count > 5) cancel();
+                if (count > 5) cancel();
             }
         };
 

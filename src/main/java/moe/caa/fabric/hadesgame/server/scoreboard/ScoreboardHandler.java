@@ -117,8 +117,7 @@ public final class ScoreboardHandler extends AbstractTick {
             packet1.hg_setName(currentDisplayName);
             packet1.hg_setHgGamePacket(true);
             entity.networkHandler.sendPacket((Packet<?>) packet1);
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             new RuntimeException("尝试更新计分板时出现异常", exception).printStackTrace();
         }
     }

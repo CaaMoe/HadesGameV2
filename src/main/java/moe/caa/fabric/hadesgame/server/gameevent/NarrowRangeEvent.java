@@ -13,6 +13,7 @@ public class NarrowRangeEvent extends ImplicitAbstractEvent {
         try {
             WorldBorder worldBorder = HadesGame.server.get().getOverworld().getWorldBorder();
             worldBorder.interpolateSize(worldBorder.getSize(), worldBorder.getSize() * 5 / 6, 10000);
-        } catch (Exception ignore){}
+        } catch (Exception ignore) {
+        }
     }
 }

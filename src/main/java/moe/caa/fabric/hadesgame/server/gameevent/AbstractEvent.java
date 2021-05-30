@@ -79,5 +79,6 @@ public abstract class AbstractEvent {
      *
      * @see moe.caa.fabric.hadesgame.server.HadesGame
      */
-    public void gameEnd(){}
+    public void gameEnd() {
+    }
 }

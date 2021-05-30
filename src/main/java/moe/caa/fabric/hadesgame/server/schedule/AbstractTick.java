@@ -26,7 +26,7 @@ public abstract class AbstractTick {
 
     protected abstract void tick();
 
-    public void cancel(){
+    public void cancel() {
         this.cancel = true;
     }
 

@@ -59,13 +59,11 @@ public class GameCore {
                 allPlayerHandler(playerEntity -> teleport(playerEntity, HadesGame.getLobbyLocation()));
                 clearWorld();
             }
-        }
-        else if (currentState == GameState.STARTING) {
+        } else if (currentState == GameState.STARTING) {
             if (isSwapState) {
                 setEvent(new GameStartingEvent());
             }
-        }
-        else if (currentState == GameState.GAMING) {
+        } else if (currentState == GameState.GAMING) {
             if (currentSurvivalPlayerNumber <= 1) {
                 endGame();
             }
@@ -114,14 +112,14 @@ public class GameCore {
             if (nextEvent.SHOULD_COUNTDOWN)
                 nextEvent.tickCountdownSecond(currentCountdown);
             if (currentCountdown == 0) {
-                if(nextEvent.getFakeEventProb() < Math.random()){
+                if (nextEvent.getFakeEventProb() < Math.random()) {
                     runPrintException(nextEvent, AbstractEvent::callEvent);
                 } else {
-                    allPlayerHandler(p->{
+                    allPlayerHandler(p -> {
                         p.sendMessage(new LiteralText("\u00a7c\u00a7lFAKE EVENT"), true);
                     });
                 }
-                if(nextEvent.SHOULD_COUNTDOWN)
+                if (nextEvent.SHOULD_COUNTDOWN)
                     nextEvent();
             }
         }
@@ -281,8 +279,7 @@ public class GameCore {
     public <T> void runPrintException(T obj, Consumer<T> consumer) {
         try {
             consumer.accept(obj);
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
@@ -296,13 +293,12 @@ public class GameCore {
         tick = HadesGameScheduleManager.runTaskTimer(GameCore.INSTANCE::tick, 1);
 
         // 游戏加入和退出
-        PlayerJoinEvent.INSTANCE.register(player -> HadesGameScheduleManager.runTask(()->{
+        PlayerJoinEvent.INSTANCE.register(player -> HadesGameScheduleManager.runTask(() -> {
             ServerWorld world = HadesGame.server.get().getOverworld();
             if (currentState == GameState.WAITING || currentState == GameState.STARTING) {
                 clearState(player, GameMode.ADVENTURE);
                 teleport(player, HadesGame.getLobbyLocation());
-            }
-            else {
+            } else {
                 clearState(player, GameMode.SPECTATOR);
                 teleport(player, new Location(new Vec3d(world.getWorldBorder().getCenterX(), 200, world.getWorldBorder().getCenterZ()), world, 0, 0));
             }
@@ -320,8 +316,7 @@ public class GameCore {
                             teleport((ServerPlayerEntity) livingEntity, new Location(new Vec3d(livingEntity.getX(), 200, livingEntity.getZ()), world, 0, 0));
                         }
                     }
-                }
-                else {
+                } else {
                     if (livingEntity.getHealth() != 20f) {
                         livingEntity.setHealth(20f);
                     }

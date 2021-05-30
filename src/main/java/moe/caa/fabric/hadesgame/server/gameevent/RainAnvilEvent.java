@@ -1,7 +1,6 @@
 package moe.caa.fabric.hadesgame.server.gameevent;
 
 import moe.caa.fabric.hadesgame.server.GameCore;
-import moe.caa.fabric.hadesgame.server.HadesGame;
 import moe.caa.fabric.hadesgame.server.schedule.AbstractTick;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 import net.minecraft.block.Blocks;
@@ -12,7 +11,6 @@ import net.minecraft.world.Heightmap;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class RainAnvilEvent extends ImplicitAbstractEvent {
     private final List<AbstractTick> eventTick = new ArrayList<>();
@@ -30,7 +28,7 @@ public class RainAnvilEvent extends ImplicitAbstractEvent {
             protected void tick() {
                 count++;
                 GameCore.INSTANCE.survivalPlayerHandler(player -> generateAnvil(player));
-                if(count > 60) cancel();
+                if (count > 60) cancel();
             }
         };
 
@@ -38,9 +36,9 @@ public class RainAnvilEvent extends ImplicitAbstractEvent {
         eventTick.add(tick);
     }
 
-    public void generateAnvil(ServerPlayerEntity entity){
+    public void generateAnvil(ServerPlayerEntity entity) {
         ServerWorld world = entity.getServerWorld();
-        int spawnY = (int) Math.max(entity.getY() + 10, world.getTopY(Heightmap.Type.MOTION_BLOCKING, (int )entity.getX(), (int)entity.getZ()) + 10);
+        int spawnY = (int) Math.max(entity.getY() + 10, world.getTopY(Heightmap.Type.MOTION_BLOCKING, (int) entity.getX(), (int) entity.getZ()) + 10);
         world.setBlockState(new BlockPos(entity.getX(), spawnY, entity.getZ()), Blocks.ANVIL.getDefaultState());
         world.updateNeighbors(new BlockPos(entity.getX(), spawnY, entity.getZ()), Blocks.ANVIL);
     }

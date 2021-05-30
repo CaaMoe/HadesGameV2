@@ -16,6 +16,7 @@ import java.util.Random;
 
 public class ThunderstormEvent extends ImplicitAbstractEvent {
     private final List<AbstractTick> eventTick = new ArrayList<>();
+
     public ThunderstormEvent() {
         super("thunderstorm", "雷暴", true, 60, 120);
     }
@@ -31,7 +32,7 @@ public class ThunderstormEvent extends ImplicitAbstractEvent {
             protected void tick() {
                 count++;
                 GameCore.INSTANCE.survivalPlayerHandler(player -> generateLightBolts(random, player));
-                if(count > 10) cancel();
+                if (count > 10) cancel();
             }
         };
 
