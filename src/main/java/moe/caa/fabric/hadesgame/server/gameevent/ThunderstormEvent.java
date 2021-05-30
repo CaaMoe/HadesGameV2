@@ -25,7 +25,7 @@ public class ThunderstormEvent extends ImplicitAbstractEvent {
     public void callEvent() {
         Random random = new Random();
 
-        AbstractTick tick = new AbstractTick(40) {
+        AbstractTick tick = new AbstractTick(80) {
             private int count = 0;
 
             @Override
