@@ -295,27 +295,18 @@ public class GameCore {
 
 
     protected void init() {
-        HadesGameScheduleManager.INSTANCE.timer.add(tick = new AbstractTick() {
-            @Override
-            protected void tick() {
-                GameCore.INSTANCE.tick();
-            }
-        });
-
+        tick = HadesGameScheduleManager.runTaskTimer(GameCore.INSTANCE::tick);
 
         // 游戏加入和退出
-        PlayerJoinEvent.INSTANCE.register(player -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
-            @Override
-            protected void tick() {
-                ServerWorld world = HadesGame.server.get().getOverworld();
-                if (currentState == GameState.WAITING || currentState == GameState.STARTING) {
-                    clearState(player, GameMode.ADVENTURE);
-                    teleport(player, HadesGame.getLobbyLocation());
-                }
-                else {
-                    clearState(player, GameMode.SPECTATOR);
-                    teleport(player, new Location(new Vec3d(world.getWorldBorder().getCenterX(), 200, world.getWorldBorder().getCenterZ()), world, 0, 0));
-                }
+        PlayerJoinEvent.INSTANCE.register(player -> HadesGameScheduleManager.runTask(()->{
+            ServerWorld world = HadesGame.server.get().getOverworld();
+            if (currentState == GameState.WAITING || currentState == GameState.STARTING) {
+                clearState(player, GameMode.ADVENTURE);
+                teleport(player, HadesGame.getLobbyLocation());
+            }
+            else {
+                clearState(player, GameMode.SPECTATOR);
+                teleport(player, new Location(new Vec3d(world.getWorldBorder().getCenterX(), 200, world.getWorldBorder().getCenterZ()), world, 0, 0));
             }
         }));
 
@@ -341,25 +332,8 @@ public class GameCore {
         });
 
         // 这堆事件只处理计算生存人数
-        PlayerJoinEvent.INSTANCE.register(playerEntity -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
-            @Override
-            protected void tick() {
-                reBuildSurvivalNumber();
-            }
-        }));
-
-        PlayerQuitEvent.INSTANCE.register(playerEntity -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
-            @Override
-            protected void tick() {
-                reBuildSurvivalNumber();
-            }
-        }));
-
-        LivingEntityChangeHealthEvent.INSTANCE.register((livingEntity, newHealth) -> HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
-            @Override
-            protected void tick() {
-                reBuildSurvivalNumber();
-            }
-        }));
+        PlayerJoinEvent.INSTANCE.register(playerEntity -> HadesGameScheduleManager.runTask(this::reBuildSurvivalNumber));
+        PlayerQuitEvent.INSTANCE.register(playerEntity -> HadesGameScheduleManager.runTask(this::reBuildSurvivalNumber));
+        LivingEntityChangeHealthEvent.INSTANCE.register((livingEntity, newHealth) -> HadesGameScheduleManager.runTask(this::reBuildSurvivalNumber));
     }
 }
