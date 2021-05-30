@@ -295,7 +295,7 @@ public class GameCore {
 
 
     protected void init() {
-        tick = HadesGameScheduleManager.runTaskTimer(GameCore.INSTANCE::tick);
+        tick = HadesGameScheduleManager.runTaskTimer(GameCore.INSTANCE::tick, 1);
 
         // 游戏加入和退出
         PlayerJoinEvent.INSTANCE.register(player -> HadesGameScheduleManager.runTask(()->{

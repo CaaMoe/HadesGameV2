@@ -91,8 +91,8 @@ public class HadesGameScheduleManager {
         INSTANCE.delayTimer.put(task, later);
     }
 
-    public static AbstractTick runTaskTimer(Runnable runnable){
-        AbstractTick ret = new AbstractTick() {
+    public static AbstractTick runTaskTimer(Runnable runnable, int period){
+        AbstractTick ret = new AbstractTick(period) {
             @Override
             protected void tick() {
                 runnable.run();
@@ -102,8 +102,8 @@ public class HadesGameScheduleManager {
         return ret;
     }
 
-    public static AbstractTick runTaskTimerLater(Runnable runnable, int later){
-        AbstractTick ret = new AbstractTick() {
+    public static AbstractTick runTaskTimerLater(Runnable runnable, int later, int period){
+        AbstractTick ret = new AbstractTick(period) {
             @Override
             protected void tick() {
                 runnable.run();
