@@ -32,7 +32,7 @@ import java.util.Random;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class GameCore extends AbstractTick {
+public class GameCore {
     public static final GameCore INSTANCE = new GameCore();
     public final WeightRandomArrayList<AbstractEvent> eventList = new WeightRandomArrayList<>();
     private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yy");
@@ -41,12 +41,12 @@ public class GameCore extends AbstractTick {
     public int currentCountdown = 0;
     private GameState lastState = null;
     private int currentSurvivalPlayerNumber = 0;
+    private AbstractTick tick = null;
 
     private GameCore() {
-        super(1);
+
     }
 
-    @Override
     protected void tick() {
 
         // 是否交换
@@ -106,7 +106,7 @@ public class GameCore extends AbstractTick {
 
     // 事件tick
     private void testCallEvent() {
-        if (getTickNumber() == 0 || getTickNumber() % 20 == 0) {
+        if (tick.getTickNumber() == 0 || tick.getTickNumber() % 20 == 0) {
             currentCountdown--;
             if (nextEvent.SHOULD_COUNTDOWN)
                 nextEvent.tickCountdownSecond(currentCountdown);
@@ -293,8 +293,14 @@ public class GameCore extends AbstractTick {
         currentSurvivalPlayerNumber = getSurvivalPlayers().size();
     }
 
+
     protected void init() {
-        HadesGameScheduleManager.INSTANCE.timer.add(this);
+        HadesGameScheduleManager.INSTANCE.timer.add(tick = new AbstractTick() {
+            @Override
+            protected void tick() {
+                GameCore.INSTANCE.tick();
+            }
+        });
 
 
         // 游戏加入和退出
