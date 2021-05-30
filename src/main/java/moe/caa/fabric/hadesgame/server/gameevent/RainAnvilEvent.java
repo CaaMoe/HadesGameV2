@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 public class RainAnvilEvent extends ImplicitAbstractEvent {
-    private List<AbstractTick> eventTick = new ArrayList<>();
+    private final List<AbstractTick> eventTick = new ArrayList<>();
 
     public RainAnvilEvent() {
         super("rainAnvil", "铁砧雨", true, 60, 120);
@@ -48,5 +48,6 @@ public class RainAnvilEvent extends ImplicitAbstractEvent {
     @Override
     public void gameEnd() {
         eventTick.forEach(AbstractTick::cancel);
+        eventTick.clear();
     }
 }
