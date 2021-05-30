@@ -114,9 +114,12 @@ public class GameCore {
                 if(nextEvent.getFakeEventProb() < Math.random()){
                     runPrintException(nextEvent, AbstractEvent::callEvent);
                 } else {
-                    // TODO: 2021/5/26 这里需要添加向玩家发送或播放假事件嘲讽的讯息 ？
+                    allPlayerHandler(p->{
+                        p.sendMessage(new LiteralText("\u00a7c\u00a7lFAKE EVENT"), true);
+                    });
                 }
-                nextEvent();
+                if(nextEvent.SHOULD_COUNTDOWN)
+                    nextEvent();
             }
         }
     }
@@ -207,19 +210,11 @@ public class GameCore {
 
     // 强制终止游戏
     public void forceEndGame() {
-        currentState = GameState.WAITING;
+        GameCore.INSTANCE.currentState = GameState.WAITING;
+        setEvent(new GameWaitingEvent());
         allPlayerHandler(playerEntity -> sendTitle(playerEntity, new LiteralText("\u00a7cFBI WARNING"), new LiteralText("\u00a7e游戏已被强制终止"), 0, 20, 20));
         HadesGame.server.get().getOverworld().getWorldBorder().setCenter(0, 0);
         HadesGame.server.get().getOverworld().getWorldBorder().setSize(100);
-
-        allPlayerHandler(p -> {
-            clearState(p, GameMode.ADVENTURE);
-            teleport(p, HadesGame.getLobbyLocation());
-        });
-
-        GameCore.INSTANCE.currentState = GameState.WAITING;
-        setEvent(new GameWaitingEvent());
-        clearWorld();
 
         for (WeightRandomArrayList.Entry<AbstractEvent> entry : eventList.resource) {
             entry.value.gameEnd();
