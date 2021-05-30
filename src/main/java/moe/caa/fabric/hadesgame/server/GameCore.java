@@ -94,6 +94,9 @@ public class GameCore {
                 entity.kill();
             }
         });
+
+        HadesGame.server.get().getOverworld().getWorldBorder().setCenter(0, 0);
+        HadesGame.server.get().getOverworld().getWorldBorder().setSize(100);
     }
 
     // 设置事件

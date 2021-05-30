@@ -16,4 +16,8 @@ public abstract class CoreAbstractEvent extends AbstractEvent {
     public double getFakeEventProb() {
         return 0.0;
     }
+
+    @Override
+    public final void gameEnd() {
+    }
 }
