@@ -100,28 +100,24 @@ public class HadesGame implements ModInitializer {
         // 背包破损
         GameCore.INSTANCE.eventList.add(new RandomClearInventorySectionEvent(), 4);
 
-
         // 放置大厅方块
-        HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
-            @Override
-            protected void tick() {
-                ServerWorld world = server.get().getOverworld();
+        HadesGameScheduleManager.runTask(()->{
+            ServerWorld world = server.get().getOverworld();
 
-                // 大厅地面
-                for (int i = -10; i < 10; i++) {
-                    for (int j = -10; j < 10; j++) {
-                        world.setBlockState(new BlockPos(i, 200, j), Blocks.BARRIER.getDefaultState());
-                    }
+            // 大厅地面
+            for (int i = -10; i < 10; i++) {
+                for (int j = -10; j < 10; j++) {
+                    world.setBlockState(new BlockPos(i, 200, j), Blocks.BARRIER.getDefaultState());
                 }
+            }
 
-                // 大厅墙壁
-                for (int i = -10; i < 10; i++) {
-                    for (int j = 200; j < 208; j++) {
-                        world.setBlockState(new BlockPos(10, j, i), Blocks.BARRIER.getDefaultState());
-                        world.setBlockState(new BlockPos(-10, j, i), Blocks.BARRIER.getDefaultState());
-                        world.setBlockState(new BlockPos(i, j, 10), Blocks.BARRIER.getDefaultState());
-                        world.setBlockState(new BlockPos(i, j, -10), Blocks.BARRIER.getDefaultState());
-                    }
+            // 大厅墙壁
+            for (int i = -10; i < 10; i++) {
+                for (int j = 200; j < 208; j++) {
+                    world.setBlockState(new BlockPos(10, j, i), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(-10, j, i), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(i, j, 10), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(i, j, -10), Blocks.BARRIER.getDefaultState());
                 }
             }
         });
