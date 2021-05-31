@@ -39,6 +39,7 @@ public class RainAnvilEvent extends ImplicitAbstractEvent {
     public void generateAnvil(ServerPlayerEntity entity) {
         ServerWorld world = entity.getServerWorld();
         int spawnY = (int) Math.max(entity.getY() + 10, world.getTopY(Heightmap.Type.MOTION_BLOCKING, (int) entity.getX(), (int) entity.getZ()) + 10);
+        if (spawnY > entity.getY() + 50) return;
         world.setBlockState(new BlockPos(entity.getX(), spawnY, entity.getZ()), Blocks.ANVIL.getDefaultState());
         world.updateNeighbors(new BlockPos(entity.getX(), spawnY, entity.getZ()), Blocks.ANVIL);
     }
