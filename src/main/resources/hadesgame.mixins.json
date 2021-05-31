@@ -5,11 +5,13 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinCommandManager",
+    "MixinItemEntity",
     "MixinItems",
     "MixinLivingEntity",
     "MixinMinecraftServer",
     "MixinPlayerManager",
     "MixinServerPlayNetworkHandler",
+    "MixinServerWorld",
     "MixinStatusEffects",
     "scoreboard.MixinScoreboardDisplayS2CPacket",
     "scoreboard.MixinScoreboardObjectiveUpdateS2CPacket",

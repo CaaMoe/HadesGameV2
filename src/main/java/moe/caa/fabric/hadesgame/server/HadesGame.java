@@ -1,7 +1,6 @@
 package moe.caa.fabric.hadesgame.server;
 
 import moe.caa.fabric.hadesgame.server.gameevent.*;
-import moe.caa.fabric.hadesgame.server.schedule.AbstractTick;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 import moe.caa.fabric.hadesgame.server.scoreboard.ScoreboardHandler;
 import net.fabricmc.api.ModInitializer;
@@ -99,6 +98,9 @@ public class HadesGame implements ModInitializer {
 
         // 背包破损
         GameCore.INSTANCE.eventList.add(new RandomClearInventorySectionEvent(), 4);
+
+        // 三倍掉落
+        GameCore.INSTANCE.eventList.add(new TripleDropEvent(), 1);
 
         // 放置大厅方块
         HadesGameScheduleManager.runTask(()->{
