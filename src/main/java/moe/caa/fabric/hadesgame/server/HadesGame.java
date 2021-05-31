@@ -105,6 +105,9 @@ public class HadesGame implements ModInitializer {
         // 随机掉落
         GameCore.INSTANCE.eventList.add(new RandomDropEvent(), 1);
 
+        // 昏乱
+        GameCore.INSTANCE.eventList.add(new RandomMoveEvent(), 1);
+
         // 放置大厅方块
         HadesGameScheduleManager.runTask(()->{
             ServerWorld world = server.get().getOverworld();
