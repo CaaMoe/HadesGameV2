@@ -102,6 +102,9 @@ public class HadesGame implements ModInitializer {
         // 三倍掉落
         GameCore.INSTANCE.eventList.add(new TripleDropEvent(), 1);
 
+        // 随机掉落
+        GameCore.INSTANCE.eventList.add(new RandomDropEvent(), 1);
+
         // 放置大厅方块
         HadesGameScheduleManager.runTask(()->{
             ServerWorld world = server.get().getOverworld();
