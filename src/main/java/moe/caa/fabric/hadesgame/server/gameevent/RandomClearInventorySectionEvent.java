@@ -14,17 +14,17 @@ public class RandomClearInventorySectionEvent extends ImplicitAbstractEvent {
         GameCore.INSTANCE.survivalPlayerHandler(p -> {
             HgPlayerInventory hgPlayerInventory = HgPlayerInventory.valueOf(p);
             for (int i = 0; i < hgPlayerInventory.armor.size(); i++) {
-                if (0.3 > Math.random()) {
+                if (0.5 > Math.random()) {
                     hgPlayerInventory.armor.set(i, ItemStack.EMPTY);
                 }
             }
             for (int i = 0; i < hgPlayerInventory.main.size(); i++) {
-                if (0.3 > Math.random()) {
+                if (0.5 > Math.random()) {
                     hgPlayerInventory.main.set(i, ItemStack.EMPTY);
                 }
             }
             for (int i = 0; i < hgPlayerInventory.offHand.size(); i++) {
-                if (0.3 > Math.random()) {
+                if (0.5 > Math.random()) {
                     hgPlayerInventory.offHand.set(i, ItemStack.EMPTY);
                 }
             }
