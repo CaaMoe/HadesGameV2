@@ -22,6 +22,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
+import net.minecraft.world.border.WorldBorder;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
@@ -102,6 +103,14 @@ public class GameCore {
         nextEvent = event;
         if (nextEvent.SHOULD_COUNTDOWN) {
             currentCountdown = nextEvent.COUNTDOWN_RANDOM_MIN + new Random().nextInt(nextEvent.COUNTDOWN_RANDOM_MAX - nextEvent.COUNTDOWN_RANDOM_MIN);
+        }
+
+        WorldBorder worldBorder = HadesGame.server.get().getOverworld().getWorldBorder();
+        double size = worldBorder.getSize();
+        double size0 = worldBorder.getSize();
+        size = Math.max(size - 50, 50);
+        if(size != size0){
+            worldBorder.interpolateSize(size0, size, 20000);
         }
     }
 

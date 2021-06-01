@@ -81,9 +81,6 @@ public class HadesGame implements ModInitializer {
         // 交换生命
         GameCore.INSTANCE.eventList.add(new SwapHealthEvent(), 5);
 
-        // 缩圈
-        GameCore.INSTANCE.eventList.add(new NarrowRangeEvent(), 3);
-
         // 发光
         GameCore.INSTANCE.eventList.add(new LuminescenceEvent(), 2);
 

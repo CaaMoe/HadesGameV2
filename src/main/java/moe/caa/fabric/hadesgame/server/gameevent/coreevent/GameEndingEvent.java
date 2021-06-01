@@ -23,7 +23,7 @@ public class GameEndingEvent extends CoreAbstractEvent {
             GameCore.INSTANCE.teleport(p, HadesGame.getLobbyLocation());
         });
         HadesGame.server.get().getOverworld().getWorldBorder().setCenter(0, 0);
-        HadesGame.server.get().getOverworld().getWorldBorder().setSize(100);
+        HadesGame.server.get().getOverworld().getWorldBorder().setSize(200);
         GameCore.INSTANCE.currentState = GameState.WAITING;
     }
 

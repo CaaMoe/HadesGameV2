@@ -46,11 +46,12 @@ public class GameStartingEvent extends CoreAbstractEvent {
         ServerWorld serverWorld = HadesGame.server.get().getOverworld();
         int[] a = getCenter(serverWorld);
 
+        serverWorld.getWorldBorder().setCenter(a[0], a[2]);
+        serverWorld.getWorldBorder().setSize(550);
+
         GameCore.INSTANCE.allPlayerHandler(playerEntity -> {
 
             playerEntity.teleport(serverWorld, a[0], a[1] + 1, a[2], 0, 0);
-            serverWorld.getWorldBorder().setCenter(a[0], a[2]);
-            serverWorld.getWorldBorder().interpolateSize(10, 500, 5000);
             HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
                 @Override
                 protected void tick() {
