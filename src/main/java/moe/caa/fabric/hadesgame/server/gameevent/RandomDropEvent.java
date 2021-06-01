@@ -14,11 +14,11 @@ public class RandomDropEvent extends ImplicitAbstractEvent {
     @Override
     public void callEvent() {
         for (ServerWorld world : HadesGame.server.get().getWorlds()) {
-            ((IServerWorldHandler)world).hg_setRandomDrop(true);
+            ((IServerWorldHandler) world).hg_setRandomDrop(true);
         }
-        HadesGameScheduleManager.runTaskLater(()->{
+        HadesGameScheduleManager.runTaskLater(() -> {
             for (ServerWorld world : HadesGame.server.get().getWorlds()) {
-                ((IServerWorldHandler)world).hg_setRandomDrop(false);
+                ((IServerWorldHandler) world).hg_setRandomDrop(false);
             }
         }, 20 * 90);
     }
@@ -26,7 +26,7 @@ public class RandomDropEvent extends ImplicitAbstractEvent {
     @Override
     public void gameEnd() {
         for (ServerWorld world : HadesGame.server.get().getWorlds()) {
-            ((IServerWorldHandler)world).hg_setRandomDrop(false);
+            ((IServerWorldHandler) world).hg_setRandomDrop(false);
         }
     }
 }

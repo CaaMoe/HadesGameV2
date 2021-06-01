@@ -14,11 +14,11 @@ public class TripleDropEvent extends ImplicitAbstractEvent {
     @Override
     public void callEvent() {
         for (ServerWorld world : HadesGame.server.get().getWorlds()) {
-            ((IServerWorldHandler)world).hg_setTripleDrop(true);
+            ((IServerWorldHandler) world).hg_setTripleDrop(true);
         }
-        HadesGameScheduleManager.runTaskLater(()->{
+        HadesGameScheduleManager.runTaskLater(() -> {
             for (ServerWorld world : HadesGame.server.get().getWorlds()) {
-                ((IServerWorldHandler)world).hg_setTripleDrop(false);
+                ((IServerWorldHandler) world).hg_setTripleDrop(false);
             }
         }, 20 * 30);
     }
@@ -26,7 +26,7 @@ public class TripleDropEvent extends ImplicitAbstractEvent {
     @Override
     public void gameEnd() {
         for (ServerWorld world : HadesGame.server.get().getWorlds()) {
-            ((IServerWorldHandler)world).hg_setTripleDrop(false);
+            ((IServerWorldHandler) world).hg_setTripleDrop(false);
         }
     }
 }

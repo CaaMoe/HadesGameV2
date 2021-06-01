@@ -16,10 +16,11 @@ import static moe.caa.fabric.hadesgame.server.HadesGame.ITEM_WEIGHT_RANDOM_ARRAY
 
 @Mixin(ServerWorld.class)
 public abstract class MixinServerWorld implements IServerWorldHandler {
-    @Shadow public abstract boolean spawnEntity(Entity entity);
-
     private boolean hg_tripleDrop = false;
     private boolean hg_randomDrop = false;
+
+    @Shadow
+    public abstract boolean spawnEntity(Entity entity);
 
     @Override
     public void hg_setRandomDrop(boolean b) {
@@ -32,12 +33,12 @@ public abstract class MixinServerWorld implements IServerWorldHandler {
     }
 
     @Inject(method = "spawnEntity", at = @At("HEAD"))
-    private void onSpawnEntity(Entity entity, CallbackInfoReturnable<Boolean> cir){
-        if(hg_randomDrop  && entity instanceof ItemEntity ){
+    private void onSpawnEntity(Entity entity, CallbackInfoReturnable<Boolean> cir) {
+        if (hg_randomDrop && entity instanceof ItemEntity) {
             ((ItemEntity) entity).setStack(ITEM_WEIGHT_RANDOM_ARRAY_LIST.randomGet().getDefaultStack());
         }
         Vec3d vec3d = entity.getVelocity();
-        if(hg_tripleDrop && entity instanceof ItemEntity && !((IItemEntityHandler) entity).hg_isModSpawn()){
+        if (hg_tripleDrop && entity instanceof ItemEntity && !((IItemEntityHandler) entity).hg_isModSpawn()) {
             for (int i = 0; i < 3; i++) {
                 ItemEntity itemEntity = new ItemEntity(entity.world, entity.getX(), entity.getY(), entity.getZ(), ((ItemEntity) entity).getStack());
                 ((IItemEntityHandler) itemEntity).hg_setModSpawn(true);

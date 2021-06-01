@@ -5,12 +5,11 @@ import moe.caa.fabric.hadesgame.server.schedule.AbstractTick;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RandomMoveEvent extends ImplicitAbstractEvent{
+public class RandomMoveEvent extends ImplicitAbstractEvent {
     private final List<AbstractTick> eventTick = new ArrayList<>();
 
     public RandomMoveEvent() {

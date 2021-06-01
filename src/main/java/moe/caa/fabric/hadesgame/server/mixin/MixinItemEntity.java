@@ -7,7 +7,8 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ItemEntity.class)
 public abstract class MixinItemEntity implements IItemEntityHandler {
-    @Shadow private int pickupDelay;
+    @Shadow
+    private int pickupDelay;
     private boolean hg_modSpawn = false;
 
     @Override

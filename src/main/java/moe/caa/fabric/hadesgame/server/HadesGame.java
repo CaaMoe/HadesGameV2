@@ -109,7 +109,7 @@ public class HadesGame implements ModInitializer {
         GameCore.INSTANCE.eventList.add(new RandomMoveEvent(), 1);
 
         // 放置大厅方块
-        HadesGameScheduleManager.runTask(()->{
+        HadesGameScheduleManager.runTask(() -> {
             ServerWorld world = server.get().getOverworld();
 
             // 大厅地面
