@@ -20,7 +20,7 @@ public class TripleDropEvent extends ImplicitAbstractEvent {
             for (ServerWorld world : HadesGame.server.get().getWorlds()) {
                 ((IServerWorldHandler) world).hg_setTripleDrop(false);
             }
-        }, 20 * 30);
+        }, 20 * 10);
     }
 
     @Override
