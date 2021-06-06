@@ -4,6 +4,7 @@
   "package": "moe.caa.fabric.hadesgame.server.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinBlocks",
     "MixinCommandManager",
     "MixinItemEntity",
     "MixinItems",

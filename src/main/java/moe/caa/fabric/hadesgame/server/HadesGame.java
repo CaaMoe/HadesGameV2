@@ -6,6 +6,7 @@ import moe.caa.fabric.hadesgame.server.scoreboard.ScoreboardHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.Item;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class HadesGame implements ModInitializer {
     public static final WeightRandomArrayList<StatusEffect> STATUS_EFFECT_WEIGHT_RANDOM_ARRAY_LIST = new WeightRandomArrayList<>();
     public static final WeightRandomArrayList<Item> ITEM_WEIGHT_RANDOM_ARRAY_LIST = new WeightRandomArrayList<>();
+    public static final WeightRandomArrayList<Block> BLOCK_WEIGHT_RANDOM_ARRAY_LIST = new WeightRandomArrayList<>();
     public static Optional<MinecraftServer> server = Optional.empty();
     public static List<String> scoreboardTemp = new ArrayList<>();
 
@@ -104,6 +106,9 @@ public class HadesGame implements ModInitializer {
 
         // 昏乱
         GameCore.INSTANCE.eventList.add(new RandomMoveEvent(), 1);
+
+        // 方块雨
+        GameCore.INSTANCE.eventList.add(new RainBlockEvent(), 1);
 
         // 放置大厅方块
         HadesGameScheduleManager.runTask(() -> {
