@@ -72,43 +72,43 @@ public class HadesGame implements ModInitializer {
         // 注册事件
 
         // 交换位置
-        GameCore.INSTANCE.eventList.add(new SwapLocationEvent(), 4);
+        GameCore.INSTANCE.eventList.add(new SwapLocationEvent(), 10);
 
         // 治疗
         GameCore.INSTANCE.eventList.add(new TreatmentEvent(), 2);
 
         // 交换背包
-        GameCore.INSTANCE.eventList.add(new SwapInventoryEvent(), 3);
+        GameCore.INSTANCE.eventList.add(new SwapInventoryEvent(), 10);
 
         // 交换生命
-        GameCore.INSTANCE.eventList.add(new SwapHealthEvent(), 5);
+        GameCore.INSTANCE.eventList.add(new SwapHealthEvent(), 10);
 
         // 发光
-        GameCore.INSTANCE.eventList.add(new LuminescenceEvent(), 2);
+        GameCore.INSTANCE.eventList.add(new LuminescenceEvent(), 5);
 
         // 雷暴
-        GameCore.INSTANCE.eventList.add(new ThunderstormEvent(), 4);
+        GameCore.INSTANCE.eventList.add(new ThunderstormEvent(), 10);
 
         // 随机效果
         GameCore.INSTANCE.eventList.add(new RandomEffectEvent(), 10);
 
         // 铁砧雨
-        GameCore.INSTANCE.eventList.add(new RainAnvilEvent(), 3);
+        GameCore.INSTANCE.eventList.add(new RainAnvilEvent(), 10);
 
         // 背包破损
-        GameCore.INSTANCE.eventList.add(new RandomClearInventorySectionEvent(), 4);
+        GameCore.INSTANCE.eventList.add(new RandomClearInventorySectionEvent(), 10);
 
         // 三倍掉落
-        GameCore.INSTANCE.eventList.add(new TripleDropEvent(), 1);
+        GameCore.INSTANCE.eventList.add(new TripleDropEvent(), 5);
 
         // 随机掉落
-        GameCore.INSTANCE.eventList.add(new RandomDropEvent(), 1);
+        GameCore.INSTANCE.eventList.add(new RandomDropEvent(), 10);
 
         // 昏乱
-        GameCore.INSTANCE.eventList.add(new RandomMoveEvent(), 1);
+        GameCore.INSTANCE.eventList.add(new RandomMoveEvent(), 10);
 
         // 方块雨
-        GameCore.INSTANCE.eventList.add(new RainBlockEvent(), 1);
+        GameCore.INSTANCE.eventList.add(new RainBlockEvent(), 5);
 
         // 放置大厅方块
         HadesGameScheduleManager.runTask(() -> {
