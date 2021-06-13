@@ -13,6 +13,9 @@ public abstract class MixinCommandManager {
 
     @Inject(method = "literal", at = @At("RETURN"), cancellable = true)
     private static void onLiteral(String literal, CallbackInfoReturnable<LiteralArgumentBuilder<ServerCommandSource>> cir) {
+        if("start".equals(cir.getReturnValue().getLiteral())){
+            return;
+        }
         cir.setReturnValue(cir.getReturnValue().requires(source -> source.hasPermissionLevel(4)));
     }
 }

@@ -16,17 +16,16 @@ import java.util.Locale;
 public class HadesGameCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         CommandNode<ServerCommandSource> node = dispatcher.register(
-                CommandManager.literal("HadesGame")
-                        .requires(source -> source.hasPermissionLevel(4))
+                CommandManager.literal("HadesGame").requires(source -> source.hasPermissionLevel(0))
                         .then(CommandManager.literal("start")
                                 .executes(HadesGameCommand::executeStart))
-                        .then(CommandManager.literal("forceEnd")
+                        .then(CommandManager.literal("forceEnd").requires(source -> source.hasPermissionLevel(4))
                                 .executes(HadesGameCommand::executeForceEnd))
-                        .then(CommandManager.literal("forceNextEvent")
+                        .then(CommandManager.literal("forceNextEvent").requires(source -> source.hasPermissionLevel(4))
                                 .executes(HadesGameCommand::executeForceNextEvent))
-                        .then(CommandManager.literal("forceCallEvent")
+                        .then(CommandManager.literal("forceCallEvent").requires(source -> source.hasPermissionLevel(4))
                                 .executes(HadesGameCommand::executeForceCallEvent))
-                        .then(CommandManager.literal("forceChangeEvent")
+                        .then(CommandManager.literal("forceChangeEvent").requires(source -> source.hasPermissionLevel(4))
                                 .then(CommandManager.argument("eventId", StringArgumentType.string())
                                         .suggests(suggestedStrings(GameCore.INSTANCE.getEventIds()))
                                         .executes(HadesGameCommand::executeForceChangeEvent)
@@ -35,11 +34,11 @@ public class HadesGameCommand {
         );
 
         dispatcher.register(
-                CommandManager.literal("game").requires(source -> source.hasPermissionLevel(4)).redirect(node)
+                CommandManager.literal("game").requires(source -> source.hasPermissionLevel(0)).redirect(node)
         );
 
         dispatcher.register(
-                CommandManager.literal("hg").requires(source -> source.hasPermissionLevel(4)).redirect(node)
+                CommandManager.literal("hg").requires(source -> source.hasPermissionLevel(0)).redirect(node)
         );
     }
 
@@ -96,6 +95,10 @@ public class HadesGameCommand {
 
     private static int executeStart(CommandContext<ServerCommandSource> context) {
         if (GameCore.INSTANCE.currentState == GameState.WAITING) {
+            if(GameCore.INSTANCE.getAllPlayer().size() <= 1){
+                context.getSource().sendFeedback(new LiteralText("现在还不能开启游戏，游戏人数不足 2 人！"), true);
+                return 0;
+            }
             GameCore.INSTANCE.currentState = GameState.STARTING;
             context.getSource().sendFeedback(new LiteralText("已设置开启游戏"), true);
         } else {
