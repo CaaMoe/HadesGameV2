@@ -107,10 +107,14 @@ public class GameCore {
 
         WorldBorder worldBorder = HadesGame.server.get().getOverworld().getWorldBorder();
         double size = worldBorder.getSize();
+        if(size > 50){
+            size = Math.max(size - 50, 50);
+        } else {
+            size = Math.max(size - 10, 1);
+        }
         double size0 = worldBorder.getSize();
-        size = Math.max(size - 50, 50);
         if(size != size0){
-            worldBorder.interpolateSize(size0, size, 20000);
+            worldBorder.interpolateSize(size0, size, 10000);
         }
     }
 
@@ -318,6 +322,7 @@ public class GameCore {
                 ServerWorld world = HadesGame.server.get().getOverworld();
                 if (currentState == GameState.GAMING) {
                     if (livingEntity.isDead()) {
+                        ((ServerPlayerEntity) livingEntity).inventory.dropAll();
                         clearState((ServerPlayerEntity) livingEntity, GameMode.SPECTATOR);
                         sendAllMessage(new LiteralText("\u00a7e" + livingEntity.getDisplayName().asString() + " \u00a7c死了"));
 

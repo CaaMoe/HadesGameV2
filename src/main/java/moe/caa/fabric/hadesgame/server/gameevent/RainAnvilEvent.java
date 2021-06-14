@@ -16,7 +16,7 @@ public class RainAnvilEvent extends ImplicitAbstractEvent {
     private final List<AbstractTick> eventTick = new ArrayList<>();
 
     public RainAnvilEvent() {
-        super("rainAnvil", "铁砧雨", true, 60, 120);
+        super("rainAnvil", "铁砧雨", true, 30, 100);
     }
 
     @Override

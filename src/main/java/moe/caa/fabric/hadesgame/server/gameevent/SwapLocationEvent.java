@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class SwapLocationEvent extends ImplicitAbstractEvent {
     public SwapLocationEvent() {
-        super("swapLocation", "斗转星移", true, 60, 120);
+        super("swapLocation", "斗转星移", true, 30, 100);
     }
 
     @Override

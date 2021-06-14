@@ -8,7 +8,7 @@ import net.minecraft.server.world.ServerWorld;
 public class TripleDropEvent extends ImplicitAbstractEvent {
 
     public TripleDropEvent() {
-        super("tripleDrop", "三倍掉落", true, 60, 120);
+        super("tripleDrop", "三倍掉落", true, 30, 100);
     }
 
     @Override

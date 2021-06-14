@@ -21,7 +21,7 @@ public class RainBlockEvent extends ImplicitAbstractEvent {
     private final List<AbstractTick> eventTick = new ArrayList<>();
 
     public RainBlockEvent() {
-        super("rainBlock", "方块雨", true, 60, 120);
+        super("rainBlock", "方块雨", true, 30, 100);
     }
 
     @Override

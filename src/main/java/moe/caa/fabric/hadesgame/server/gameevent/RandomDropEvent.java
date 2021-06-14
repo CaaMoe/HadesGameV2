@@ -8,7 +8,7 @@ import net.minecraft.server.world.ServerWorld;
 public class RandomDropEvent extends ImplicitAbstractEvent {
 
     public RandomDropEvent() {
-        super("randomDrop", "随机掉落", true, 60, 120);
+        super("randomDrop", "随机掉落", true, 30, 100);
     }
 
     @Override

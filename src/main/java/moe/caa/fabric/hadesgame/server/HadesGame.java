@@ -15,6 +15,9 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +65,9 @@ public class HadesGame implements ModInitializer {
         scoreboardTemp.add("  ");
         scoreboardTemp.add("\u00a7a边界： \u00a7c{4}");
         scoreboardTemp.add("   ");
-        scoreboardTemp.add("\u00a7ewww.gbcraft.org");
+        scoreboardTemp.add("    ");
+        scoreboardTemp.add("\u00a7epowered by");
+        scoreboardTemp.add("\u00a77   fantasyzone.cc");
 
 
         // 设置计分板内容
@@ -110,6 +115,9 @@ public class HadesGame implements ModInitializer {
         // 方块雨
         GameCore.INSTANCE.eventList.add(new RainBlockEvent(), 5);
 
+        // 三倍事件！
+        GameCore.INSTANCE.eventList.add(new TripleEvent(), 5);
+
         // 放置大厅方块
         HadesGameScheduleManager.runTask(() -> {
             ServerWorld world = server.get().getOverworld();
@@ -131,5 +139,26 @@ public class HadesGame implements ModInitializer {
                 }
             }
         });
+
+        // 删除老的世界
+        File file = new File("world");
+        try {
+            deleteDir(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteDir(File file){
+        //判断是否为文件夹
+        if(file.isDirectory()){
+            File[] files = file.listFiles();
+            if(files != null){
+                for (File value : files) {
+                    deleteDir(value);
+                }
+            }
+        }
+        file.delete();
     }
 }

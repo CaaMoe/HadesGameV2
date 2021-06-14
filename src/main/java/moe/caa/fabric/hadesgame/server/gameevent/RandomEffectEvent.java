@@ -6,7 +6,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 
 public class RandomEffectEvent extends ImplicitAbstractEvent {
     public RandomEffectEvent() {
-        super("randomEffect", "随机效果", true, 60, 120);
+        super("randomEffect", "随机效果", true, 30, 100);
     }
 
     @Override

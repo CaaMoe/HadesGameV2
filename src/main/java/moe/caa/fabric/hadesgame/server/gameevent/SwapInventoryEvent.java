@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class SwapInventoryEvent extends ImplicitAbstractEvent {
     public SwapInventoryEvent() {
-        super("swapInventory", "背包互换", true, 60, 120);
+        super("swapInventory", "背包互换", true, 30, 100);
     }
 
     @Override

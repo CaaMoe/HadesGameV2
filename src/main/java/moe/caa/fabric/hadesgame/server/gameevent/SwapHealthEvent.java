@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class SwapHealthEvent extends ImplicitAbstractEvent {
     public SwapHealthEvent() {
-        super("swapHealth", "生命互换", true, 60, 120);
+        super("swapHealth", "生命互换", true, 30, 100);
     }
 
     @Override

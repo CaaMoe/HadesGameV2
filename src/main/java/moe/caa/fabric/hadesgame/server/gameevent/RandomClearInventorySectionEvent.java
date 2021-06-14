@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 public class RandomClearInventorySectionEvent extends ImplicitAbstractEvent {
     public RandomClearInventorySectionEvent() {
-        super("randomClearItem", "背包破损", true, 60, 120);
+        super("randomClearItem", "背包破损", true, 30, 100);
     }
 
     @Override

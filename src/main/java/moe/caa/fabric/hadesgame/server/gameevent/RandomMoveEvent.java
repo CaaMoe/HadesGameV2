@@ -13,7 +13,7 @@ public class RandomMoveEvent extends ImplicitAbstractEvent {
     private final List<AbstractTick> eventTick = new ArrayList<>();
 
     public RandomMoveEvent() {
-        super("randomMove", "昏乱", true, 60, 120);
+        super("randomMove", "昏乱", true, 30, 100);
     }
 
     @Override

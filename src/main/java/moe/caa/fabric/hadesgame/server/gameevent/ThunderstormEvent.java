@@ -18,7 +18,7 @@ public class ThunderstormEvent extends ImplicitAbstractEvent {
     private final List<AbstractTick> eventTick = new ArrayList<>();
 
     public ThunderstormEvent() {
-        super("thunderstorm", "雷暴", true, 60, 120);
+        super("thunderstorm", "雷暴", true, 30, 100);
     }
 
     @Override

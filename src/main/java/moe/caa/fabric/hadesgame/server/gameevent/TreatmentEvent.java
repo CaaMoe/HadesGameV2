@@ -6,7 +6,7 @@ import net.minecraft.entity.effect.StatusEffects;
 
 public class TreatmentEvent extends ImplicitAbstractEvent {
     public TreatmentEvent() {
-        super("treatment", "治疗", true, 60, 120);
+        super("treatment", "治疗", true, 30, 100);
     }
 
     @Override

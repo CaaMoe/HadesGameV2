@@ -6,7 +6,7 @@ import net.minecraft.entity.effect.StatusEffects;
 
 public class LuminescenceEvent extends ImplicitAbstractEvent {
     public LuminescenceEvent() {
-        super("luminescence", "发光", true, 60, 120);
+        super("luminescence", "发光", true, 30, 100);
     }
 
     @Override
