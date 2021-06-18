@@ -16,8 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +30,19 @@ public class HadesGame implements ModInitializer {
     // 大厅位置
     public static Location getLobbyLocation() {
         return new Location(new Vec3d(0, 202, 0), server.get().getOverworld(), 0, 0);
+    }
+
+    public static void deleteDir(File file) {
+        //判断是否为文件夹
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File value : files) {
+                    deleteDir(value);
+                }
+            }
+        }
+        file.delete();
     }
 
     @Override
@@ -147,18 +158,5 @@ public class HadesGame implements ModInitializer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static void deleteDir(File file){
-        //判断是否为文件夹
-        if(file.isDirectory()){
-            File[] files = file.listFiles();
-            if(files != null){
-                for (File value : files) {
-                    deleteDir(value);
-                }
-            }
-        }
-        file.delete();
     }
 }

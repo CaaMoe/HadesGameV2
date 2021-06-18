@@ -95,7 +95,7 @@ public class HadesGameCommand {
 
     private static int executeStart(CommandContext<ServerCommandSource> context) {
         if (GameCore.INSTANCE.currentState == GameState.WAITING) {
-            if(GameCore.INSTANCE.getAllPlayer().size() <= 1){
+            if (GameCore.INSTANCE.getAllPlayer().size() <= 1) {
                 context.getSource().sendFeedback(new LiteralText("现在还不能开启游戏，游戏人数不足 2 人！"), true);
                 return 0;
             }

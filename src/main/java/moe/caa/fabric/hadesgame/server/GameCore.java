@@ -107,13 +107,13 @@ public class GameCore {
 
         WorldBorder worldBorder = HadesGame.server.get().getOverworld().getWorldBorder();
         double size = worldBorder.getSize();
-        if(size > 50){
+        if (size > 50) {
             size = Math.max(size - 50, 50);
         } else {
             size = Math.max(size - 10, 1);
         }
         double size0 = worldBorder.getSize();
-        if(size != size0){
+        if (size != size0) {
             worldBorder.interpolateSize(size0, size, 10000);
         }
     }

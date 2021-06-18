@@ -17,7 +17,7 @@ public class TripleEvent extends ImplicitAbstractEvent {
         triple.add(GameCore.INSTANCE.eventList.randomGet());
         triple.add(GameCore.INSTANCE.eventList.randomGet());
         triple.add(GameCore.INSTANCE.eventList.randomGet());
-        GameCore.INSTANCE.allPlayerHandler(player->{
+        GameCore.INSTANCE.allPlayerHandler(player -> {
             player.sendMessage(new LiteralText("选中的三倍事件："), false);
             player.sendMessage(new LiteralText(triple.get(0).EVENT_NAME), false);
             player.sendMessage(new LiteralText(triple.get(1).EVENT_NAME), false);

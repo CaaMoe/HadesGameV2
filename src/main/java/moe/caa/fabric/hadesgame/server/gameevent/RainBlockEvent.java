@@ -4,13 +4,9 @@ import moe.caa.fabric.hadesgame.server.GameCore;
 import moe.caa.fabric.hadesgame.server.HadesGame;
 import moe.caa.fabric.hadesgame.server.schedule.AbstractTick;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
 
 import java.util.ArrayList;

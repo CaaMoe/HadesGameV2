@@ -13,7 +13,7 @@ import static moe.caa.fabric.hadesgame.server.HadesGame.BLOCK_WEIGHT_RANDOM_ARRA
 public abstract class MixinBlocks {
 
     @Inject(method = "register", at = @At("TAIL"))
-    private static void onRegister(String id, Block block, CallbackInfoReturnable<Block> cir){
+    private static void onRegister(String id, Block block, CallbackInfoReturnable<Block> cir) {
         BLOCK_WEIGHT_RANDOM_ARRAY_LIST.add(cir.getReturnValue(), 10);
     }
 }
