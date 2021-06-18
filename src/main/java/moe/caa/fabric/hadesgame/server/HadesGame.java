@@ -77,8 +77,7 @@ public class HadesGame implements ModInitializer {
         scoreboardTemp.add("\u00a7a边界： \u00a7c{4}");
         scoreboardTemp.add("   ");
         scoreboardTemp.add("    ");
-        scoreboardTemp.add("\u00a7epowered by");
-        scoreboardTemp.add("\u00a77   fantasyzone.cc");
+        scoreboardTemp.add("\u00a7ewww.minecraft.net");
 
 
         // 设置计分板内容
