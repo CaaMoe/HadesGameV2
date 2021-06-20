@@ -64,17 +64,17 @@ public class HadesGame implements ModInitializer {
         GameCore.INSTANCE.init();
 
         // 设置计分板标题
-        ScoreboardHandler.INSTANCE.currentTitle = "\u00a7e\u00a7l阴间游戏";
+        ScoreboardHandler.INSTANCE.currentTitle = "\u00a7e\u00a7lHades Game";
 
         // 设置动态模板
         scoreboardTemp.add("\u00a78{0}");
         scoreboardTemp.add("");
-        scoreboardTemp.add("\u00a7f下一事件:");
+        scoreboardTemp.add("\u00a7fNext Event:");
         scoreboardTemp.add("\u00a7a{1}  \u00a77{2}");
         scoreboardTemp.add(" ");
-        scoreboardTemp.add("\u00a7a存活： \u00a7c{3}");
+        scoreboardTemp.add("\u00a7aSurvivors \u00a7c{3}");
         scoreboardTemp.add("  ");
-        scoreboardTemp.add("\u00a7a边界： \u00a7c{4}");
+        scoreboardTemp.add("\u00a7aBorder: \u00a7c{4}");
         scoreboardTemp.add("   ");
         scoreboardTemp.add("    ");
         scoreboardTemp.add("\u00a7ewww.minecraft.net");
