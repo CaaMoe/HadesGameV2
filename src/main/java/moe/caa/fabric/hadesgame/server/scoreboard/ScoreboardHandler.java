@@ -14,7 +14,9 @@ import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
+import sun.misc.Unsafe;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +28,8 @@ public final class ScoreboardHandler extends AbstractTick {
     public String currentTitle = "";
     private String lastTitle = "";
     private String currentDisplayName = "HGScoreboard";
+
+    private Unsafe unsafe;
 
     private ScoreboardHandler() {
         super(1);
@@ -39,6 +43,14 @@ public final class ScoreboardHandler extends AbstractTick {
         lastContent.add("");
         lastContent.add("");
         lastContent.add("");
+
+        try {
+            Field f = Unsafe.class.getDeclaredField("theUnsafe");
+            f.setAccessible(true);
+            unsafe = (Unsafe) f.get(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -78,7 +90,8 @@ public final class ScoreboardHandler extends AbstractTick {
         try {
             // 创建计分板
             IScoreboardObjectiveUpdateS2CPacket packet =
-                    (IScoreboardObjectiveUpdateS2CPacket) (new ScoreboardObjectiveUpdateS2CPacket());
+                    (IScoreboardObjectiveUpdateS2CPacket) (unsafe.allocateInstance(ScoreboardObjectiveUpdateS2CPacket.class));
+
             packet.hg_setName(currentDisplayName);
             packet.hg_setDisplayName(new LiteralText(lastTitle));
             packet.hg_setType(ScoreboardCriterion.RenderType.INTEGER);
@@ -89,7 +102,7 @@ public final class ScoreboardHandler extends AbstractTick {
             // 推送计分板
             for (int i = lastContent.size() - 1; i >= 0; i--) {
                 IScoreboardPlayerUpdateS2CPacket packet2 =
-                        (IScoreboardPlayerUpdateS2CPacket) (new ScoreboardPlayerUpdateS2CPacket());
+                        (IScoreboardPlayerUpdateS2CPacket) (unsafe.allocateInstance(ScoreboardPlayerUpdateS2CPacket.class));
                 packet2.hg_setPlayerName(lastContent.get(i));
                 packet2.hg_setScore(lastContent.size() - i);
                 packet2.hg_setObjectiveName(currentDisplayName);
@@ -101,7 +114,7 @@ public final class ScoreboardHandler extends AbstractTick {
             //移除老的计分板
             if (oldName != null) {
                 IScoreboardObjectiveUpdateS2CPacket packet4 =
-                        (IScoreboardObjectiveUpdateS2CPacket) new ScoreboardObjectiveUpdateS2CPacket();
+                        (IScoreboardObjectiveUpdateS2CPacket) unsafe.allocateInstance(ScoreboardObjectiveUpdateS2CPacket.class);
                 packet4.hg_setName(oldName);
                 packet4.hg_setDisplayName(new LiteralText(lastTitle));
                 packet4.hg_setType(ScoreboardCriterion.RenderType.INTEGER);
@@ -112,7 +125,7 @@ public final class ScoreboardHandler extends AbstractTick {
 
             // 设置显示位置
             IScoreboardDisplayS2CPacket packet1 =
-                    (IScoreboardDisplayS2CPacket) (new ScoreboardDisplayS2CPacket());
+                    (IScoreboardDisplayS2CPacket) unsafe.allocateInstance(ScoreboardDisplayS2CPacket.class);
             packet1.hg_setSlot(1);
             packet1.hg_setName(currentDisplayName);
             packet1.hg_setHgGamePacket(true);

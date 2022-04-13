@@ -58,7 +58,7 @@ public class GameStartingEvent extends CoreAbstractEvent {
                     int y = serverWorld.getTopY(Heightmap.Type.MOTION_BLOCKING, a[0], a[2]);
                     playerEntity.teleport(serverWorld, a[0], y, a[2], 0, 0);
                     GameCore.INSTANCE.clearState(playerEntity, GameMode.SURVIVAL);
-                    playerEntity.setGameMode(GameMode.SURVIVAL);
+                    playerEntity.changeGameMode(GameMode.SURVIVAL);
                     GameCore.INSTANCE.playSound(playerEntity, SoundEvents.ENTITY_CHICKEN_HURT, SoundCategory.PLAYERS, 10, 1);
                     playerEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 20 * 60 * 2, 2));
                 }

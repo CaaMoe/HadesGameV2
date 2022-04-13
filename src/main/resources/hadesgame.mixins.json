@@ -2,10 +2,11 @@
   "required": true,
   "minVersion": "0.8",
   "package": "moe.caa.fabric.hadesgame.server.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
     "MixinBlocks",
     "MixinCommandManager",
+    "MixinItem_CompassItem",
     "MixinItemEntity",
     "MixinItems",
     "MixinLivingEntity",

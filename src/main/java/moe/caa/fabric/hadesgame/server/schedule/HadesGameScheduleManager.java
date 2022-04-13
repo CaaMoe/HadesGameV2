@@ -115,7 +115,11 @@ public class HadesGameScheduleManager {
 
     public void init() {
         ServerTickEvents.START_SERVER_TICK.register(server -> {
-            tick();
+            try {
+                tick();
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
         });
     }
 }

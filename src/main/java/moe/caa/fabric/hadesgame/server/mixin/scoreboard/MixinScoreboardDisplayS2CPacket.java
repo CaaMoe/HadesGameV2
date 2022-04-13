@@ -2,11 +2,21 @@ package moe.caa.fabric.hadesgame.server.mixin.scoreboard;
 
 import moe.caa.fabric.hadesgame.server.scoreboard.IScoreboardDisplayS2CPacket;
 import net.minecraft.network.packet.s2c.play.ScoreboardDisplayS2CPacket;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ScoreboardDisplayS2CPacket.class)
 public abstract class MixinScoreboardDisplayS2CPacket implements IScoreboardDisplayS2CPacket {
+    @Mutable
+    @Shadow
+    @Final
+    private int slot;
+    @Mutable
+    @Shadow
+    @Final
+    private String name;
     private boolean hg_gamePacket = false;
 
     @Override
@@ -18,35 +28,23 @@ public abstract class MixinScoreboardDisplayS2CPacket implements IScoreboardDisp
         this.hg_gamePacket = hg_gamePacket;
     }
 
-    @Accessor
-    protected abstract int getSlot();
-
-    @Accessor
-    protected abstract void setSlot(int slot);
-
     @Override
     public int hg_getSlot() {
-        return getSlot();
+        return slot;
     }
 
     @Override
     public void hg_setSlot(int slot) {
-        setSlot(slot);
+        this.slot = slot;
     }
-
-    @Accessor
-    protected abstract String getName();
-
-    @Accessor
-    protected abstract void setName(String name);
 
     @Override
     public String hg_getName() {
-        return getName();
+        return name;
     }
 
     @Override
     public void hg_setName(String name) {
-        setName(name);
+        this.name = name;
     }
 }

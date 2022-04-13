@@ -4,11 +4,29 @@ import moe.caa.fabric.hadesgame.server.scoreboard.IScoreboardObjectiveUpdateS2CP
 import net.minecraft.network.packet.s2c.play.ScoreboardObjectiveUpdateS2CPacket;
 import net.minecraft.scoreboard.ScoreboardCriterion;
 import net.minecraft.text.Text;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ScoreboardObjectiveUpdateS2CPacket.class)
 public abstract class MixinScoreboardObjectiveUpdateS2CPacket implements IScoreboardObjectiveUpdateS2CPacket {
+    @Mutable
+    @Shadow
+    @Final
+    private String name;
+    @Mutable
+    @Shadow
+    @Final
+    private Text displayName;
+    @Mutable
+    @Shadow
+    @Final
+    private ScoreboardCriterion.RenderType type;
+    @Mutable
+    @Shadow
+    @Final
+    private int mode;
     private boolean hg_gamePacket = false;
 
     @Override
@@ -20,68 +38,44 @@ public abstract class MixinScoreboardObjectiveUpdateS2CPacket implements IScoreb
         this.hg_gamePacket = hg_gamePacket;
     }
 
-
-    @Accessor
-    protected abstract String getName();
-
-    @Accessor
-    protected abstract void setName(String name);
-
     @Override
     public String hg_getName() {
-        return getName();
+        return name;
     }
 
     @Override
     public void hg_setName(String name) {
-        setName(name);
+        this.name = name;
     }
-
-    @Accessor
-    protected abstract Text getDisplayName();
-
-    @Accessor
-    protected abstract void setDisplayName(Text text);
 
     @Override
     public Text hg_getDisplayName() {
-        return getDisplayName();
+        return displayName;
     }
 
     @Override
     public void hg_setDisplayName(Text text) {
-        setDisplayName(text);
+        this.displayName = text;
     }
 
-    @Accessor
-    protected abstract ScoreboardCriterion.RenderType getType();
-
-    @Accessor
-    protected abstract void setType(ScoreboardCriterion.RenderType type);
 
     @Override
     public ScoreboardCriterion.RenderType hg_getType() {
-        return getType();
+        return type;
     }
 
     @Override
     public void hg_setType(ScoreboardCriterion.RenderType type) {
-        setType(type);
+        this.type = type;
     }
-
-    @Accessor
-    protected abstract int getMode();
-
-    @Accessor
-    protected abstract void setMode(int mode);
 
     @Override
     public int hg_getMode() {
-        return getMode();
+        return mode;
     }
 
     @Override
     public void hg_setMode(int mode) {
-        setMode(mode);
+        this.mode = mode;
     }
 }

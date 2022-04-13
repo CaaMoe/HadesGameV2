@@ -12,6 +12,8 @@ import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 import moe.caa.fabric.hadesgame.server.scoreboard.ScoreboardHandler;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
+import net.minecraft.network.packet.s2c.play.SubtitleS2CPacket;
+import net.minecraft.network.packet.s2c.play.TitleFadeS2CPacket;
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -88,11 +90,16 @@ public class GameCore {
         HadesGame.server.get().getOverworld().setTimeOfDay(1000);
 
         // 清理实体
-        (HadesGame.server.get().getOverworld()).iterateEntities().forEach(entity -> {
-            if (!(entity instanceof ServerPlayerEntity)) {
-                entity.kill();
-            }
-        });
+        try {
+            (HadesGame.server.get().getOverworld()).iterateEntities().forEach(entity -> {
+                if (!(entity instanceof ServerPlayerEntity)) {
+                    if (entity != null)
+                        entity.kill();
+                }
+            });
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
         HadesGame.server.get().getOverworld().getWorldBorder().setCenter(0, 0);
         HadesGame.server.get().getOverworld().getWorldBorder().setSize(100);
@@ -157,9 +164,9 @@ public class GameCore {
 
     // 清理游戏状态
     public void clearState(ServerPlayerEntity entity, GameMode mode) {
-        entity.setGameMode(mode);
-        entity.inventory.clear();
-        entity.inventory.selectedSlot = 0;
+        entity.changeGameMode(mode);
+        entity.getInventory().clear();
+        entity.getInventory().selectedSlot = 0;
         entity.setExperienceLevel(0);
         entity.setExperiencePoints(0);
         entity.getHungerManager().setFoodLevel(20);
@@ -196,9 +203,11 @@ public class GameCore {
 
     // 发送标题
     public void sendTitle(ServerPlayerEntity playerEntity, Text title, Text subtitle, int fadeIn, int fadeOut, int delay) {
-        TitleS2CPacket time = new TitleS2CPacket(fadeIn, delay, fadeOut);
-        TitleS2CPacket titlePacket = new TitleS2CPacket(TitleS2CPacket.Action.TITLE, title);
-        TitleS2CPacket subtitlePacket = new TitleS2CPacket(TitleS2CPacket.Action.SUBTITLE, subtitle);
+
+        TitleFadeS2CPacket time = new TitleFadeS2CPacket(fadeIn, delay, fadeOut);
+
+        TitleS2CPacket titlePacket = new TitleS2CPacket(title);
+        SubtitleS2CPacket subtitlePacket = new SubtitleS2CPacket(subtitle);
 
         playerEntity.networkHandler.sendPacket(time);
         playerEntity.networkHandler.sendPacket(titlePacket);
@@ -322,7 +331,7 @@ public class GameCore {
                 ServerWorld world = HadesGame.server.get().getOverworld();
                 if (currentState == GameState.GAMING) {
                     if (livingEntity.isDead()) {
-                        ((ServerPlayerEntity) livingEntity).inventory.dropAll();
+                        ((ServerPlayerEntity) livingEntity).getInventory().dropAll();
                         clearState((ServerPlayerEntity) livingEntity, GameMode.SPECTATOR);
                         sendAllMessage(new LiteralText("\u00a7e" + livingEntity.getDisplayName().asString() + " \u00a7c死了"));
 

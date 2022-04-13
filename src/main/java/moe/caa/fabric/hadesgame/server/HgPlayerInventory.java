@@ -19,7 +19,7 @@ public class HgPlayerInventory {
     }
 
     public static HgPlayerInventory valueOf(ServerPlayerEntity entity) {
-        PlayerInventory inventory = entity.inventory;
+        PlayerInventory inventory = entity.getInventory();
         return new HgPlayerInventory(inventory.main, inventory.armor, inventory.offHand);
     }
 
@@ -36,7 +36,7 @@ public class HgPlayerInventory {
     }
 
     public void append(ServerPlayerEntity entity) {
-        PlayerInventory inventory = entity.inventory;
+        PlayerInventory inventory = entity.getInventory();
         inventory.clear();
         for (int i = 0; i < main.size(); i++) {
             inventory.main.set(i, main.get(i));

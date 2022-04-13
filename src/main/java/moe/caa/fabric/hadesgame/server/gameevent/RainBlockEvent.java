@@ -7,6 +7,7 @@ import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
 
 import java.util.ArrayList;
@@ -38,15 +39,16 @@ public class RainBlockEvent extends ImplicitAbstractEvent {
     }
 
     public void generateBlock(ServerPlayerEntity entity) {
-        ServerWorld world = entity.getServerWorld();
+        ServerWorld world = entity.getWorld();
         int spawnY = (int) Math.max(entity.getY() + 10, world.getTopY(Heightmap.Type.MOTION_BLOCKING, (int) entity.getX(), (int) entity.getZ()) + 10);
         if (spawnY > entity.getY() + 50) return;
 
 
-        FallingBlockEntity fallingBlockEntity = new FallingBlockEntity(world, entity.getX(), spawnY, entity.getZ(), HadesGame.BLOCK_WEIGHT_RANDOM_ARRAY_LIST.randomGet().getDefaultState());
+        FallingBlockEntity fallingBlockEntity = FallingBlockEntity.spawnFromBlock(world, new BlockPos(entity.getX(), spawnY, entity.getZ()), HadesGame.BLOCK_WEIGHT_RANDOM_ARRAY_LIST.randomGet().getDefaultState());
+        //FallingBlockEntity fallingBlockEntity = new FallingBlockEntity(world, entity.getX(), spawnY, entity.getZ(), HadesGame.BLOCK_WEIGHT_RANDOM_ARRAY_LIST.randomGet().getDefaultState());
         fallingBlockEntity.timeFalling = 1;
 
-        world.spawnEntity(fallingBlockEntity);
+        //world.spawnEntity(fallingBlockEntity);
 
     }
 
