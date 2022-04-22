@@ -9,6 +9,7 @@ import com.mojang.brigadier.tree.CommandNode;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 
 import java.util.List;
 import java.util.Locale;
@@ -61,12 +62,12 @@ public class HadesGameCommand {
 
     private static int executeForceChangeEvent(CommandContext<ServerCommandSource> context) {
         if (GameCore.INSTANCE.currentState != GameState.GAMING) {
-            context.getSource().sendFeedback(new LiteralText("强制切换失败，当前游戏并未进行中"), true);
+            context.getSource().sendFeedback(Text.literal("强制切换失败，当前游戏并未进行中"), true);
         } else {
             if (GameCore.INSTANCE.forceChangeEvent(StringArgumentType.getString(context, "eventId"))) {
-                context.getSource().sendFeedback(new LiteralText("已强制切换事件"), true);
+                context.getSource().sendFeedback(Text.literal("已强制切换事件"), true);
             } else {
-                context.getSource().sendFeedback(new LiteralText("强制切换失败，找不到事件错误"), true);
+                context.getSource().sendFeedback(Text.literal("强制切换失败，找不到事件错误"), true);
             }
         }
         return 0;
@@ -75,20 +76,20 @@ public class HadesGameCommand {
 
     private static int executeForceCallEvent(CommandContext<ServerCommandSource> context) {
         if (!GameCore.INSTANCE.nextEvent.SHOULD_COUNTDOWN) {
-            context.getSource().sendFeedback(new LiteralText("催促事件失败，当前事件未开启倒计时服务"), true);
+            context.getSource().sendFeedback(Text.literal("催促事件失败，当前事件未开启倒计时服务"), true);
         } else {
             GameCore.INSTANCE.currentCountdown = 5;
-            context.getSource().sendFeedback(new LiteralText("催促事件成功，事件将在 5 秒后执行"), true);
+            context.getSource().sendFeedback(Text.literal("催促事件成功，事件将在 5 秒后执行"), true);
         }
         return 0;
     }
 
     private static int executeForceNextEvent(CommandContext<ServerCommandSource> context) {
         if (GameCore.INSTANCE.currentState != GameState.GAMING) {
-            context.getSource().sendFeedback(new LiteralText("强制切换失败，当前游戏并未进行中"), true);
+            context.getSource().sendFeedback(Text.literal("强制切换失败，当前游戏并未进行中"), true);
         } else {
             GameCore.INSTANCE.nextEvent();
-            context.getSource().sendFeedback(new LiteralText("已强制切换事件为下一事件"), true);
+            context.getSource().sendFeedback(Text.literal("已强制切换事件为下一事件"), true);
         }
         return 0;
     }
@@ -96,23 +97,23 @@ public class HadesGameCommand {
     private static int executeStart(CommandContext<ServerCommandSource> context) {
         if (GameCore.INSTANCE.currentState == GameState.WAITING) {
             if (GameCore.INSTANCE.getAllPlayer().size() <= 1) {
-                context.getSource().sendFeedback(new LiteralText("现在还不能开启游戏，游戏人数不足 2 人！"), true);
+                context.getSource().sendFeedback(Text.literal("现在还不能开启游戏，游戏人数不足 2 人！"), true);
                 return 0;
             }
             GameCore.INSTANCE.currentState = GameState.STARTING;
-            context.getSource().sendFeedback(new LiteralText("已设置开启游戏"), true);
+            context.getSource().sendFeedback(Text.literal("已设置开启游戏"), true);
         } else {
-            context.getSource().sendFeedback(new LiteralText("现在还不能开启游戏，因为游戏已经开始或正在开始或正在结束。如果需要强制结束游戏，请使用指令关闭游戏"), true);
+            context.getSource().sendFeedback(Text.literal("现在还不能开启游戏，因为游戏已经开始或正在开始或正在结束。如果需要强制结束游戏，请使用指令关闭游戏"), true);
         }
         return 0;
     }
 
     private static int executeForceEnd(CommandContext<ServerCommandSource> context) {
         if (GameCore.INSTANCE.currentState == GameState.WAITING) {
-            context.getSource().sendFeedback(new LiteralText("强制结束失败，当前游戏并未开始"), true);
+            context.getSource().sendFeedback(Text.literal("强制结束失败，当前游戏并未开始"), true);
         } else {
             GameCore.INSTANCE.forceEndGame();
-            context.getSource().sendFeedback(new LiteralText("已强制结束游戏"), true);
+            context.getSource().sendFeedback(Text.literal("已强制结束游戏"), true);
         }
         return 0;
     }

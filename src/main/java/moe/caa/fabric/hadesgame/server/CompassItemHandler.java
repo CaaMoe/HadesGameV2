@@ -8,6 +8,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -56,7 +57,8 @@ public class CompassItemHandler {
             ServerPlayerEntity target = entry.getValue();
             if (!target.isAlive() || target.world != owner.world) {
                 if (owner.getMainHandStack().getItem() instanceof CompassItem || owner.getOffHandStack().getItem() instanceof CompassItem)
-                    owner.sendMessage(new LiteralText("\u00a7c目标已丢失，请重新指定目标"), true);
+                    owner.sendMessage(Text.literal("\u00a7c目标已丢失，请重新指定目标"), true);
+                
                 continue;
             }
 
@@ -68,7 +70,7 @@ public class CompassItemHandler {
                                     target.getBlockPos().getZ()),
                             target.headYaw));
             if (owner.getMainHandStack().getItem() instanceof CompassItem || owner.getOffHandStack().getItem() instanceof CompassItem)
-                owner.sendMessage(new LiteralText("\u00a7a目标 \u00a77: " + target.getGameProfile().getName()
+                owner.sendMessage(Text.literal("\u00a7a目标 \u00a77: " + target.getGameProfile().getName()
                         + "    " + "\u00a7a距离 \u00a77: " + passDouble(target.getBlockPos(), owner.getBlockPos())), true);
         }
     }

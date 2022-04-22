@@ -11,6 +11,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.Heightmap;
 
@@ -31,10 +32,10 @@ public class GameStartingEvent extends CoreAbstractEvent {
             case 3:
             case 2:
             case 1:
-                GameCore.INSTANCE.sendAllMessage(new LiteralText("\u00a7e游戏将在 \u00a7c" + countdown + " \u00a7e秒后开始"));
+                GameCore.INSTANCE.sendAllMessage(Text.literal("\u00a7e游戏将在 \u00a7c" + countdown + " \u00a7e秒后开始"));
                 GameCore.INSTANCE.allPlayerHandler(playerEntity -> {
                             GameCore.INSTANCE.playSound(playerEntity, SoundEvents.BLOCK_NOTE_BLOCK_HAT, SoundCategory.PLAYERS, 10, 1);
-                            GameCore.INSTANCE.sendTitle(playerEntity, new LiteralText("\u00a7c" + countdown), new LiteralText("\u00a7e游戏即将开始"), 0, 10, 20);
+                            GameCore.INSTANCE.sendTitle(playerEntity, Text.literal("\u00a7c" + countdown), Text.literal("\u00a7e游戏即将开始"), 0, 10, 20);
                         }
                 );
         }
