@@ -1,5 +1,6 @@
 package moe.caa.fabric.hadesgame.server.mixin;
 
+import moe.caa.fabric.hadesgame.server.Contains;
 import moe.caa.fabric.hadesgame.server.IItemEntityHandler;
 import moe.caa.fabric.hadesgame.server.IServerWorldHandler;
 import net.minecraft.entity.Entity;
@@ -35,7 +36,9 @@ public abstract class MixinServerWorld implements IServerWorldHandler {
     @Inject(method = "spawnEntity", at = @At("HEAD"))
     private void onSpawnEntity(Entity entity, CallbackInfoReturnable<Boolean> cir) {
         if (hg_randomDrop && entity instanceof ItemEntity) {
-            ((ItemEntity) entity).setStack(ITEM_WEIGHT_RANDOM_ARRAY_LIST.randomGet().getDefaultStack());
+            if(!Contains.doNntModifyDropType.remove(entity.getUuid())){
+                ((ItemEntity) entity).setStack(ITEM_WEIGHT_RANDOM_ARRAY_LIST.randomGet().getDefaultStack());
+            }
         }
         Vec3d vec3d = entity.getVelocity();
         if (hg_tripleDrop && entity instanceof ItemEntity && !((IItemEntityHandler) entity).hg_isModSpawn()) {

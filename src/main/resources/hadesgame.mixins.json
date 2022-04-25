@@ -13,6 +13,7 @@
     "MixinMinecraftServer",
     "MixinPlayerManager",
     "MixinServerCommandSource",
+    "MixinServerPlayerEntity",
     "MixinServerPlayNetworkHandler",
     "MixinServerWorld",
     "MixinStatusEffects",
