@@ -5,16 +5,15 @@ import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MinecraftServer.class)
 public abstract class MixinMinecraftServer {
 
-    @Inject(method = "shouldKeepTicking", at = @At("HEAD"), cancellable = true)
-    private void onShouldKeepTicking(CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "runTasksTillTickEnd", at = @At("HEAD"), cancellable = true)
+    private void onShouldKeepTicking(CallbackInfo ci) {
         if (Contains.tickSpeedUp) {
-            cir.setReturnValue(true);
-            cir.cancel();
+            ci.cancel();
         }
     }
 }
