@@ -1,0 +1,22 @@
+package moe.caa.fabric.hadesgame.server.gameevent;
+
+import moe.caa.fabric.hadesgame.server.Contains;
+import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
+
+public class TickSpeedUp extends ImplicitAbstractEvent {
+
+    public TickSpeedUp() {
+        super("tickSpeedUp", "沧海桑田", true, 30, 100);
+    }
+
+    @Override
+    public void callEvent() {
+        Contains.tickSpeed = true;
+        HadesGameScheduleManager.runTaskLater(() -> Contains.tickSpeed = false, 20 * 90);
+    }
+
+    @Override
+    public void gameEnd() {
+        Contains.tickSpeed = false;
+    }
+}

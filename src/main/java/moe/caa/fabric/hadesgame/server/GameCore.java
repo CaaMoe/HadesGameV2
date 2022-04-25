@@ -10,15 +10,16 @@ import moe.caa.fabric.hadesgame.server.gameevent.coreevent.GameWaitingEvent;
 import moe.caa.fabric.hadesgame.server.schedule.AbstractTick;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 import moe.caa.fabric.hadesgame.server.scoreboard.ScoreboardHandler;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.network.packet.s2c.play.*;
+import net.minecraft.network.packet.s2c.play.PlaySoundIdS2CPacket;
+import net.minecraft.network.packet.s2c.play.SubtitleS2CPacket;
+import net.minecraft.network.packet.s2c.play.TitleFadeS2CPacket;
+import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
@@ -96,7 +97,6 @@ public class GameCore {
                 }
             });
         } catch (Exception e) {
-            System.err.println(e.getMessage());
         }
 
         HadesGame.server.get().getOverworld().getWorldBorder().setCenter(0, 0);

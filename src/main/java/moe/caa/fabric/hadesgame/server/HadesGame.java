@@ -125,8 +125,9 @@ public class HadesGame implements ModInitializer {
         // 方块雨
         GameCore.INSTANCE.eventList.add(new RainBlockEvent(), 5);
 
-        // 三倍事件！
-        GameCore.INSTANCE.eventList.add(new TripleEvent(), 5);
+        // 沧海桑田
+        GameCore.INSTANCE.eventList.add(new TickSpeedUp(), 10);
+
 
         // 放置大厅方块
         HadesGameScheduleManager.runTask(() -> {

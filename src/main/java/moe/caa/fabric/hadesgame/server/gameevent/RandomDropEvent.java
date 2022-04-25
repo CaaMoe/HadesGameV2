@@ -1,5 +1,6 @@
 package moe.caa.fabric.hadesgame.server.gameevent;
 
+import moe.caa.fabric.hadesgame.server.Contains;
 import moe.caa.fabric.hadesgame.server.HadesGame;
 import moe.caa.fabric.hadesgame.server.IServerWorldHandler;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
@@ -28,5 +29,6 @@ public class RandomDropEvent extends ImplicitAbstractEvent {
         for (ServerWorld world : HadesGame.server.get().getWorlds()) {
             ((IServerWorldHandler) world).hg_setRandomDrop(false);
         }
+        Contains.doNntModifyDropType.clear();
     }
 }
