@@ -26,10 +26,21 @@ public class HadesGame implements ModInitializer {
     public static final WeightRandomArrayList<Block> BLOCK_WEIGHT_RANDOM_ARRAY_LIST = new WeightRandomArrayList<>();
     public static Optional<MinecraftServer> server = Optional.empty();
     public static List<String> scoreboardTemp = new ArrayList<>();
+    private static Location loc;
 
     // 大厅位置
     public static Location getLobbyLocation() {
-        return new Location(new Vec3d(0, 202, 0), server.get().getOverworld(), 0, 0);
+        return loc;
+    }
+
+    public static void randomLobbyLocation() {
+        final double x = -20000000 + Math.random() * 40000000;
+        final double z = -20000000 + Math.random() * 40000000;
+        loc = new Location(new Vec3d(x, 302, z), server.get().getOverworld(), 0, 0);
+        server.get().getOverworld().getWorldBorder().setCenter(x, z);
+        server.get().getOverworld().getWorldBorder().setSize(200);
+
+        placeLobbyBlock();
     }
 
     public static void deleteDir(File file) {
@@ -45,6 +56,57 @@ public class HadesGame implements ModInitializer {
         file.delete();
     }
 
+    private static void placeLobbyBlock() {
+        // 放置大厅方块
+        HadesGameScheduleManager.runTask(() -> {
+            ServerWorld world = server.get().getOverworld();
+
+            final Location lobbyLocation = getLobbyLocation();
+
+            // 大厅地面
+            for (int i = (int) (lobbyLocation.pos.x - 10); i < (lobbyLocation.pos.x + 10); i++) {
+                for (int j = (int) (lobbyLocation.pos.z - 10); j < (lobbyLocation.pos.z + 10); j++) {
+                    world.setBlockState(new BlockPos(i, 300, j), Blocks.BARRIER.getDefaultState());
+                }
+            }
+
+
+            // 大厅墙壁
+            for (int i = (int) (lobbyLocation.pos.x - 10); i < lobbyLocation.pos.x + 10; i++) {
+                for (int j = 300; j < 302; j++) {
+                    world.setBlockState(new BlockPos(10, j, i), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(-10, j, i), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(i, j, 10), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(i, j, -10), Blocks.BARRIER.getDefaultState());
+                }
+            }
+        });
+    }
+
+    public static void removeLobbyBlock() {
+        ServerWorld world = server.get().getOverworld();
+
+        final Location lobbyLocation = getLobbyLocation();
+
+        // 大厅地面
+        for (int i = (int) (lobbyLocation.pos.x - 10); i < (lobbyLocation.pos.x + 10); i++) {
+            for (int j = (int) (lobbyLocation.pos.z - 10); j < (lobbyLocation.pos.z + 10); j++) {
+                world.setBlockState(new BlockPos(i, 300, j), Blocks.AIR.getDefaultState());
+            }
+        }
+
+
+        // 大厅墙壁
+        for (int i = (int) (lobbyLocation.pos.x - 10); i < lobbyLocation.pos.x + 10; i++) {
+            for (int j = 300; j < 302; j++) {
+                world.setBlockState(new BlockPos(10, j, i), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos(-10, j, i), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos(i, j, 10), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos(i, j, -10), Blocks.AIR.getDefaultState());
+            }
+        }
+    }
+
     @Override
     public void onInitialize() {
 
@@ -52,7 +114,10 @@ public class HadesGame implements ModInitializer {
         CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> HadesGameCommand.register(dispatcher));
 
         // 赋值服务端实例
-        ServerLifecycleEvents.SERVER_STARTING.register(server1 -> server = Optional.of(server1));
+        ServerLifecycleEvents.SERVER_STARTING.register(server1 -> {
+            server = Optional.of(server1);
+            HadesGameScheduleManager.runTask(HadesGame::randomLobbyLocation);
+        });
 
         // 初始化Schedule调度器
         HadesGameScheduleManager.INSTANCE.init();
@@ -77,7 +142,7 @@ public class HadesGame implements ModInitializer {
         scoreboardTemp.add("\u00a7a边界: \u00a7c{4}");
         scoreboardTemp.add("   ");
         scoreboardTemp.add("    ");
-        scoreboardTemp.add("\u00a7e联合公益社区特供版本");
+        scoreboardTemp.add("\u00a7e哼哼啊啊啊啊啊啊啊");
 
 
         // 设置计分板内容
@@ -127,29 +192,6 @@ public class HadesGame implements ModInitializer {
 
         // 沧海桑田
         GameCore.INSTANCE.eventList.add(new TickSpeedUp(), 10);
-
-
-        // 放置大厅方块
-        HadesGameScheduleManager.runTask(() -> {
-            ServerWorld world = server.get().getOverworld();
-
-            // 大厅地面
-            for (int i = -10; i < 10; i++) {
-                for (int j = -10; j < 10; j++) {
-                    world.setBlockState(new BlockPos(i, 200, j), Blocks.BARRIER.getDefaultState());
-                }
-            }
-
-            // 大厅墙壁
-            for (int i = -10; i < 10; i++) {
-                for (int j = 200; j < 208; j++) {
-                    world.setBlockState(new BlockPos(10, j, i), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(-10, j, i), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(i, j, 10), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(i, j, -10), Blocks.BARRIER.getDefaultState());
-                }
-            }
-        });
 
         // 删除老的世界
         File file = new File("world");

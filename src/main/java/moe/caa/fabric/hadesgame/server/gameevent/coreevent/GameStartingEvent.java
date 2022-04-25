@@ -10,12 +10,9 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.Heightmap;
-
-import java.util.Random;
 
 public class GameStartingEvent extends CoreAbstractEvent {
     public GameStartingEvent() {
@@ -25,19 +22,14 @@ public class GameStartingEvent extends CoreAbstractEvent {
     @Override
     public void tickCountdownSecond(int countdown) {
         switch (countdown) {
-            case 15:
-            case 10:
-            case 5:
-            case 4:
-            case 3:
-            case 2:
-            case 1:
+            case 15, 10, 5, 4, 3, 2, 1 -> {
                 GameCore.INSTANCE.sendAllMessage(Text.literal("\u00a7e游戏将在 \u00a7c" + countdown + " \u00a7e秒后开始"));
                 GameCore.INSTANCE.allPlayerHandler(playerEntity -> {
                             GameCore.INSTANCE.playSound(playerEntity, SoundEvents.BLOCK_NOTE_BLOCK_HAT, SoundCategory.PLAYERS, 10, 1);
                             GameCore.INSTANCE.sendTitle(playerEntity, Text.literal("\u00a7c" + countdown), Text.literal("\u00a7e游戏即将开始"), 0, 10, 20);
                         }
                 );
+            }
         }
     }
 
@@ -47,17 +39,17 @@ public class GameStartingEvent extends CoreAbstractEvent {
         ServerWorld serverWorld = HadesGame.server.get().getOverworld();
         int[] a = getCenter(serverWorld);
 
-        serverWorld.getWorldBorder().setCenter(a[0], a[2]);
-        serverWorld.getWorldBorder().setSize(550);
+        serverWorld.getWorldBorder().setCenter(a[0], a[1]);
+        serverWorld.getWorldBorder().setSize(1000);
+        HadesGame.removeLobbyBlock();
 
         GameCore.INSTANCE.allPlayerHandler(playerEntity -> {
-
-            playerEntity.teleport(serverWorld, a[0], a[1] + 1, a[2], 0, 0);
+            final int x = (int) playerEntity.getPos().getX();
+            final int z = (int) playerEntity.getPos().getZ();
+            playerEntity.teleport(serverWorld, x, serverWorld.getTopY(Heightmap.Type.MOTION_BLOCKING, x, z), z, playerEntity.getYaw(), playerEntity.getPitch());
             HadesGameScheduleManager.INSTANCE.runTask.add(new AbstractTick() {
                 @Override
                 protected void tick() {
-                    int y = serverWorld.getTopY(Heightmap.Type.MOTION_BLOCKING, a[0], a[2]);
-                    playerEntity.teleport(serverWorld, a[0], y, a[2], 0, 0);
                     GameCore.INSTANCE.clearState(playerEntity, GameMode.SURVIVAL);
                     playerEntity.changeGameMode(GameMode.SURVIVAL);
                     GameCore.INSTANCE.playSound(playerEntity, SoundEvents.ENTITY_CHICKEN_HURT, SoundCategory.PLAYERS, 10, 1);
@@ -68,10 +60,9 @@ public class GameStartingEvent extends CoreAbstractEvent {
     }
 
     private int[] getCenter(ServerWorld world) {
-        Random random = new Random();
-        int x = -20000000 + random.nextInt(40000000);
-        int z = -20000000 + random.nextInt(40000000);
+        int x = ((int) HadesGame.getLobbyLocation().pos.x);
+        int z = ((int) HadesGame.getLobbyLocation().pos.z);
         int y = world.getTopY(Heightmap.Type.MOTION_BLOCKING, x, z);
-        return new int[]{x, y, z};
+        return new int[]{x, z};
     }
 }

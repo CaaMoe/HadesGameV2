@@ -99,7 +99,7 @@ public class GameCore {
         } catch (Exception e) {
         }
 
-        HadesGame.server.get().getOverworld().getWorldBorder().setCenter(0, 0);
+        HadesGame.server.get().getOverworld().getWorldBorder().setCenter(HadesGame.getLobbyLocation().pos.x, HadesGame.getLobbyLocation().pos.z);
         HadesGame.server.get().getOverworld().getWorldBorder().setSize(100);
     }
 
@@ -113,9 +113,9 @@ public class GameCore {
         WorldBorder worldBorder = HadesGame.server.get().getOverworld().getWorldBorder();
         double size = worldBorder.getSize();
         if (size > 50) {
-            size = Math.max(size - 50, 50);
+            size = Math.max(size - Math.random() * 50, 50);
         } else {
-            size = Math.max(size - 10, 1);
+            size = Math.max(size - Math.random() * 10, 1);
         }
         double size0 = worldBorder.getSize();
         if (size != size0) {
@@ -233,8 +233,6 @@ public class GameCore {
         GameCore.INSTANCE.currentState = GameState.WAITING;
         setEvent(new GameWaitingEvent());
         allPlayerHandler(playerEntity -> sendTitle(playerEntity, Text.literal("\u00a7cFBI WARNING"), Text.literal("\u00a7e游戏已被强制终止"), 0, 20, 20));
-        HadesGame.server.get().getOverworld().getWorldBorder().setCenter(0, 0);
-        HadesGame.server.get().getOverworld().getWorldBorder().setSize(100);
 
         for (WeightRandomArrayList.Entry<AbstractEvent> entry : eventList.resource) {
             entry.value.gameEnd();

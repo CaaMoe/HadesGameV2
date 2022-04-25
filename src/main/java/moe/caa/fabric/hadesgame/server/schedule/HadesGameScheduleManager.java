@@ -119,7 +119,9 @@ public class HadesGameScheduleManager {
         ServerTickEvents.START_SERVER_TICK.register(server -> {
             try {
                 final long currentTimeMillis = System.currentTimeMillis();
-                if (lastTick.get() > currentTimeMillis - 50) return;
+                if (lastTick.get() >= currentTimeMillis - 45) {
+                    return;
+                }
                 lastTick.set(currentTimeMillis);
                 tick();
             } catch (Throwable e) {
