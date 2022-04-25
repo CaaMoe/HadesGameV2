@@ -11,12 +11,12 @@ public class TickSpeedUp extends ImplicitAbstractEvent {
 
     @Override
     public void callEvent() {
-        Contains.tickSpeed = true;
-        HadesGameScheduleManager.runTaskLater(() -> Contains.tickSpeed = false, 20 * 90);
+        Contains.tickSpeedUp = true;
+        HadesGameScheduleManager.runTaskLater(() -> Contains.tickSpeedUp = false, 20 * 90);
     }
 
     @Override
     public void gameEnd() {
-        Contains.tickSpeed = false;
+        Contains.tickSpeedUp = false;
     }
 }

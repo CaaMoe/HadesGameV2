@@ -4,6 +4,7 @@ import moe.caa.fabric.hadesgame.server.GameCore;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class HadesGameScheduleManager {
     public static final HadesGameScheduleManager INSTANCE = new HadesGameScheduleManager();
@@ -114,8 +115,12 @@ public class HadesGameScheduleManager {
     }
 
     public void init() {
+        AtomicLong lastTick = new AtomicLong(System.currentTimeMillis());
         ServerTickEvents.START_SERVER_TICK.register(server -> {
             try {
+                final long currentTimeMillis = System.currentTimeMillis();
+                if (lastTick.get() > currentTimeMillis - 50) return;
+                lastTick.set(currentTimeMillis);
                 tick();
             } catch (Throwable e) {
                 e.printStackTrace();

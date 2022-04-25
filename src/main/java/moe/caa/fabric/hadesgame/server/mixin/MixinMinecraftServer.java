@@ -12,7 +12,7 @@ public abstract class MixinMinecraftServer {
 
     @Inject(method = "shouldKeepTicking", at = @At("HEAD"), cancellable = true)
     private void onShouldKeepTicking(CallbackInfoReturnable<Boolean> cir) {
-        if (Contains.tickSpeed) {
+        if (Contains.tickSpeedUp) {
             cir.setReturnValue(true);
             cir.cancel();
         }
