@@ -8,12 +8,14 @@ import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FluidBlock;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Heightmap;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,8 +36,23 @@ public class HadesGame implements ModInitializer {
     }
 
     public static void randomLobbyLocation() {
-        final double x = -20000000 + Math.random() * 40000000;
-        final double z = -20000000 + Math.random() * 40000000;
+        int x;
+        int z;
+        Block block;
+        do {
+            x = (int) (-20000000 + Math.random() * 40000000);
+            z = (int) (-20000000 + Math.random() * 40000000);
+
+            server.get().getOverworld().getChunk(x >> 4, z >> 4);
+            int y = server.get().getOverworld().getTopY(Heightmap.Type.MOTION_BLOCKING, x, z);
+
+            do {
+                block = server.get().getOverworld().getBlockState(new BlockPos(x, y--, z)).getBlock();
+            } while (block == Blocks.AIR && y > -64);
+
+        } while (block instanceof FluidBlock || block == Blocks.AIR);
+
+        System.out.println("下轮游戏: x = " + x + ", z = " + z);
         loc = new Location(new Vec3d(x, 302, z), server.get().getOverworld(), 0, 0);
         server.get().getOverworld().getWorldBorder().setCenter(x, z);
         server.get().getOverworld().getWorldBorder().setSize(200);
@@ -76,12 +93,12 @@ public class HadesGame implements ModInitializer {
 
 
             // 大厅墙壁
-            for (int i = (int) (x - 10); i < x + 10; i++) {
-                for (int j = 300; j < 302; j++) {
-                    world.setBlockState(new BlockPos(x + 10, j, i), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(x - 10, j, i), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(i, j, z + 10), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(i, j, z - 10), Blocks.BARRIER.getDefaultState());
+            for (int i = -10; i < 10; i++) {
+                for (int y = 300; y < 308; y++) {
+                    world.setBlockState(new BlockPos(x + i, y, z + 10), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(x + i, y, z - 10), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(x + 10, y, z + i), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(x - 10, y, z + i), Blocks.BARRIER.getDefaultState());
                 }
             }
         });
@@ -104,12 +121,12 @@ public class HadesGame implements ModInitializer {
 
 
         // 大厅墙壁
-        for (int i = (int) (x - 10); i < x + 10; i++) {
-            for (int j = 300; j < 302; j++) {
-                world.setBlockState(new BlockPos(x + 10, j, i), Blocks.AIR.getDefaultState());
-                world.setBlockState(new BlockPos(x - 10, j, i), Blocks.AIR.getDefaultState());
-                world.setBlockState(new BlockPos(i, j, x + 10), Blocks.AIR.getDefaultState());
-                world.setBlockState(new BlockPos(i, j, x - 10), Blocks.AIR.getDefaultState());
+        for (int i = -10; i < 10; i++) {
+            for (int y = 300; y < 308; y++) {
+                world.setBlockState(new BlockPos(x + i, y, z + 10), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos(x + i, y, z - 10), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos(x + 10, y, z + i), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos(x - 10, y, z + i), Blocks.AIR.getDefaultState());
             }
         }
     }
@@ -139,7 +156,7 @@ public class HadesGame implements ModInitializer {
         ScoreboardHandler.INSTANCE.currentTitle = "\u00a7e\u00a7l阴间游戏";
 
         // 设置动态模板
-        scoreboardTemp.add("\u00a78{0}");
+        scoreboardTemp.add("\u00a77{0} ");
         scoreboardTemp.add("");
         scoreboardTemp.add("\u00a7f下一事件:");
         scoreboardTemp.add("\u00a7a{1}  \u00a77{2}");
@@ -148,7 +165,7 @@ public class HadesGame implements ModInitializer {
         scoreboardTemp.add("  ");
         scoreboardTemp.add("\u00a7a边界: \u00a7c{4}");
         scoreboardTemp.add("   ");
-        scoreboardTemp.add("    ");
+        scoreboardTemp.add("\u00a77{5}");
         scoreboardTemp.add("\u00a7e哼哼啊啊啊啊啊啊啊");
 
 
@@ -169,9 +186,6 @@ public class HadesGame implements ModInitializer {
 
         // 交换生命
         GameCore.INSTANCE.eventList.add(new SwapHealthEvent(), 10);
-
-        // 发光
-        GameCore.INSTANCE.eventList.add(new LuminescenceEvent(), 5);
 
         // 雷暴
         GameCore.INSTANCE.eventList.add(new ThunderstormEvent(), 10);
@@ -199,6 +213,12 @@ public class HadesGame implements ModInitializer {
 
         // 沧海桑田
         GameCore.INSTANCE.eventList.add(new TickSpeedUp(), 10);
+
+        // 腐蚀
+        GameCore.INSTANCE.eventList.add(new CorrosionEvent(), 10);
+
+        // 超级矿工
+        GameCore.INSTANCE.eventList.add(new SuperMinersEvent(), 10);
 
         // 删除老的世界
         File file = new File("world");

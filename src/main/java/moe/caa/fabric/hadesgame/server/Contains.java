@@ -11,4 +11,6 @@ public class Contains {
 
     public static boolean tickSpeedUp = false;
 
+    public static boolean superMiners = false;
+
 }

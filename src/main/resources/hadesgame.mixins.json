@@ -4,6 +4,7 @@
   "package": "moe.caa.fabric.hadesgame.server.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "DedicatedServerWatchdogMixin",
     "MixinBlocks",
     "MixinCommandManager",
     "MixinItem_CompassItem",
@@ -14,6 +15,7 @@
     "MixinPlayerManager",
     "MixinServerCommandSource",
     "MixinServerPlayerEntity",
+    "MixinServerPlayerInteractionManager",
     "MixinServerPlayNetworkHandler",
     "MixinServerWorld",
     "MixinStatusEffects",

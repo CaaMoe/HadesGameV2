@@ -113,9 +113,9 @@ public class GameCore {
         WorldBorder worldBorder = HadesGame.server.get().getOverworld().getWorldBorder();
         double size = worldBorder.getSize();
         if (size > 50) {
-            size = Math.max(size - Math.random() * 50, 50);
+            size = Math.max(size - 40 - Math.random() * 10, 50);
         } else {
-            size = Math.max(size - Math.random() * 10, 1);
+            size = Math.max(size - 6 - Math.random() * 4, 1);
         }
         double size0 = worldBorder.getSize();
         if (size != size0) {
@@ -157,7 +157,9 @@ public class GameCore {
                 nextEvent.getFormatEventName(currentCountdown),
                 nextEvent.getFormatCountDown(currentCountdown),
                 currentSurvivalPlayerNumber,
-                (int) HadesGame.server.get().getOverworld().getWorldBorder().getSize());
+                (int) HadesGame.server.get().getOverworld().getWorldBorder().getSize(),
+                ""
+        );
     }
 
     // 清理游戏状态
@@ -172,8 +174,8 @@ public class GameCore {
         entity.setHealth(20);
         entity.updateLastActionTime();
         List<StatusEffectInstance> effects = new ArrayList<>(entity.getStatusEffects());
-        for (int i = 0; i < effects.size(); i++) {
-            entity.removeStatusEffect(effects.get(i).getEffectType());
+        for (StatusEffectInstance effect : effects) {
+            entity.removeStatusEffect(effect.getEffectType());
         }
     }
 

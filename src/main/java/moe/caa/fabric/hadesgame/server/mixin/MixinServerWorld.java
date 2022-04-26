@@ -7,18 +7,30 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.profiler.Profiler;
+import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.MutableWorldProperties;
+import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.function.Supplier;
+
 import static moe.caa.fabric.hadesgame.server.HadesGame.ITEM_WEIGHT_RANDOM_ARRAY_LIST;
 
 @Mixin(ServerWorld.class)
-public abstract class MixinServerWorld implements IServerWorldHandler {
+public abstract class MixinServerWorld extends World implements IServerWorldHandler {
     private boolean hg_tripleDrop = false;
     private boolean hg_randomDrop = false;
+
+    protected MixinServerWorld(MutableWorldProperties properties, RegistryKey<World> registryRef, RegistryEntry<DimensionType> dimension, Supplier<Profiler> supplier, boolean isClient, boolean debugWorld, long seed, int maxChainedNeighborUpdates) {
+        super(properties, registryRef, dimension, supplier, isClient, debugWorld, seed, maxChainedNeighborUpdates);
+    }
 
     @Shadow
     public abstract boolean spawnEntity(Entity entity);
