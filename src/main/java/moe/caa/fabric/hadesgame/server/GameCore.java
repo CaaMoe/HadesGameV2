@@ -215,16 +215,16 @@ public class GameCore {
     // 操作所有玩家
     public final void allPlayerHandler(Consumer<ServerPlayerEntity> consumer) {
         List<ServerPlayerEntity> list = getAllPlayer();
-        for (int i = 0; i < list.size(); i++) {
-            runPrintException(list.get(i), consumer);
+        for (ServerPlayerEntity serverPlayerEntity : list) {
+            runPrintException(serverPlayerEntity, consumer);
         }
     }
 
     // 操作生存玩家
     public final void survivalPlayerHandler(Consumer<ServerPlayerEntity> consumer) {
         List<ServerPlayerEntity> list = getSurvivalPlayers();
-        for (int i = 0; i < list.size(); i++) {
-            runPrintException(list.get(i), consumer);
+        for (ServerPlayerEntity serverPlayerEntity : list) {
+            runPrintException(serverPlayerEntity, consumer);
         }
     }
 

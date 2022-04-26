@@ -15,10 +15,6 @@ public abstract class MixinBlocks {
 
     @Inject(method = "register", at = @At("TAIL"))
     private static void onRegister(String id, Block block, CallbackInfoReturnable<Block> cir) {
-        if (block instanceof FluidBlock) {
-            System.out.println("移除流体方块 - " + id);
-            return;
-        }
         BLOCK_WEIGHT_RANDOM_ARRAY_LIST.add(cir.getReturnValue(), 10);
     }
 }
