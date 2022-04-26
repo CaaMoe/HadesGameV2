@@ -220,6 +220,9 @@ public class HadesGame implements ModInitializer {
         // 超级矿工
         GameCore.INSTANCE.eventList.add(new SuperMinersEvent(), 10);
 
+        // 爬
+        GameCore.INSTANCE.eventList.add(new ClimbEvent(), 10);
+
         // 删除老的世界
         File file = new File("world");
         try {

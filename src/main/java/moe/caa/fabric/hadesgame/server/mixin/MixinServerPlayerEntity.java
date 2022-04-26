@@ -23,4 +23,13 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity {
         Contains.doNntModifyDropType.add(entity.getUuid());
         return instance.spawnEntity(entity);
     }
+
+    @Override
+    protected void setFlag(int index, boolean value) {
+        if (index == 7 && Contains.climb) {
+            super.setFlag(index, true);
+            return;
+        }
+        super.setFlag(index, value);
+    }
 }

@@ -13,4 +13,6 @@ public class Contains {
 
     public static boolean superMiners = false;
 
+    public static boolean climb = false;
+
 }
