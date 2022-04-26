@@ -63,21 +63,25 @@ public class HadesGame implements ModInitializer {
 
             final Location lobbyLocation = getLobbyLocation();
 
+            final double x = lobbyLocation.pos.x;
+            final double z = lobbyLocation.pos.z;
             // 大厅地面
-            for (int i = (int) (lobbyLocation.pos.x - 10); i < (lobbyLocation.pos.x + 10); i++) {
-                for (int j = (int) (lobbyLocation.pos.z - 10); j < (lobbyLocation.pos.z + 10); j++) {
+
+            for (int i = (int) (x - 10); i < (x + 10); i++) {
+
+                for (int j = (int) (z - 10); j < (z + 10); j++) {
                     world.setBlockState(new BlockPos(i, 300, j), Blocks.BARRIER.getDefaultState());
                 }
             }
 
 
             // 大厅墙壁
-            for (int i = (int) (lobbyLocation.pos.x - 10); i < lobbyLocation.pos.x + 10; i++) {
+            for (int i = (int) (x - 10); i < x + 10; i++) {
                 for (int j = 300; j < 302; j++) {
-                    world.setBlockState(new BlockPos(10, j, i), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(-10, j, i), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(i, j, 10), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(i, j, -10), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(x + 10, j, i), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(x - 10, j, i), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(i, j, z + 10), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos(i, j, z - 10), Blocks.BARRIER.getDefaultState());
                 }
             }
         });
@@ -89,20 +93,23 @@ public class HadesGame implements ModInitializer {
         final Location lobbyLocation = getLobbyLocation();
 
         // 大厅地面
-        for (int i = (int) (lobbyLocation.pos.x - 10); i < (lobbyLocation.pos.x + 10); i++) {
-            for (int j = (int) (lobbyLocation.pos.z - 10); j < (lobbyLocation.pos.z + 10); j++) {
+        final double x = lobbyLocation.pos.x;
+        final double z = lobbyLocation.pos.z;
+        for (int i = (int) (x - 10); i < (x + 10); i++) {
+
+            for (int j = (int) (z - 10); j < (z + 10); j++) {
                 world.setBlockState(new BlockPos(i, 300, j), Blocks.AIR.getDefaultState());
             }
         }
 
 
         // 大厅墙壁
-        for (int i = (int) (lobbyLocation.pos.x - 10); i < lobbyLocation.pos.x + 10; i++) {
+        for (int i = (int) (x - 10); i < x + 10; i++) {
             for (int j = 300; j < 302; j++) {
-                world.setBlockState(new BlockPos(10, j, i), Blocks.AIR.getDefaultState());
-                world.setBlockState(new BlockPos(-10, j, i), Blocks.AIR.getDefaultState());
-                world.setBlockState(new BlockPos(i, j, 10), Blocks.AIR.getDefaultState());
-                world.setBlockState(new BlockPos(i, j, -10), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos(x + 10, j, i), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos(x - 10, j, i), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos(i, j, x + 10), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos(i, j, x - 10), Blocks.AIR.getDefaultState());
             }
         }
     }

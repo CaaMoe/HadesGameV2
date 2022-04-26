@@ -30,7 +30,7 @@ public class RainBlockEvent extends ImplicitAbstractEvent {
             protected void tick() {
                 count++;
                 GameCore.INSTANCE.survivalPlayerHandler(player -> generateBlock(player));
-                if (count > 60) cancel();
+                if (count > 30) cancel();
             }
         };
 
@@ -40,15 +40,14 @@ public class RainBlockEvent extends ImplicitAbstractEvent {
 
     public void generateBlock(ServerPlayerEntity entity) {
         ServerWorld world = entity.getWorld();
-        int spawnY = (int) Math.max(entity.getY() + 10, world.getTopY(Heightmap.Type.MOTION_BLOCKING, (int) entity.getX(), (int) entity.getZ()) + 10);
+        final int x = (int) entity.getX() + (int) (Math.random() * 5);
+        final int z = (int) entity.getZ() + (int) (Math.random() * 5);
+        int spawnY = (int) Math.max(entity.getY() + 10, world.getTopY(Heightmap.Type.MOTION_BLOCKING, x, z) + 10);
         if (spawnY > entity.getY() + 50) return;
 
 
-        FallingBlockEntity fallingBlockEntity = FallingBlockEntity.spawnFromBlock(world, new BlockPos(entity.getX(), spawnY, entity.getZ()), HadesGame.BLOCK_WEIGHT_RANDOM_ARRAY_LIST.randomGet().getDefaultState());
-        //FallingBlockEntity fallingBlockEntity = new FallingBlockEntity(world, entity.getX(), spawnY, entity.getZ(), HadesGame.BLOCK_WEIGHT_RANDOM_ARRAY_LIST.randomGet().getDefaultState());
+        FallingBlockEntity fallingBlockEntity = FallingBlockEntity.spawnFromBlock(world, new BlockPos(x, spawnY, z), HadesGame.BLOCK_WEIGHT_RANDOM_ARRAY_LIST.randomGet().getDefaultState());
         fallingBlockEntity.timeFalling = 1;
-
-        //world.spawnEntity(fallingBlockEntity);
 
     }
 

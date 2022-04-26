@@ -28,7 +28,7 @@ public class RainAnvilEvent extends ImplicitAbstractEvent {
             protected void tick() {
                 count++;
                 GameCore.INSTANCE.survivalPlayerHandler(player -> generateAnvil(player));
-                if (count > 60) cancel();
+                if (count > 30) cancel();
             }
         };
 
@@ -38,10 +38,15 @@ public class RainAnvilEvent extends ImplicitAbstractEvent {
 
     public void generateAnvil(ServerPlayerEntity entity) {
         ServerWorld world = entity.getWorld();
-        int spawnY = (int) Math.max(entity.getY() + 10, world.getTopY(Heightmap.Type.MOTION_BLOCKING, (int) entity.getX(), (int) entity.getZ()) + 10);
+        final int x = (int) entity.getX() + (int) (Math.random() * 5);
+        final int z = (int) entity.getZ() + (int) (Math.random() * 5);
+
+        int spawnY = (int) Math.max(entity.getY() + 10, world.getTopY(Heightmap.Type.MOTION_BLOCKING, x, z) + 10);
         if (spawnY > entity.getY() + 50) return;
-        world.setBlockState(new BlockPos(entity.getX(), spawnY, entity.getZ()), Blocks.ANVIL.getDefaultState());
-        world.updateNeighbors(new BlockPos(entity.getX(), spawnY, entity.getZ()), Blocks.ANVIL);
+
+
+        world.setBlockState(new BlockPos(x, spawnY, z), Blocks.ANVIL.getDefaultState());
+        world.updateNeighbors(new BlockPos(x, spawnY, z), Blocks.ANVIL);
     }
 
     @Override

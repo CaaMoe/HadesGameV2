@@ -2,6 +2,7 @@ package moe.caa.fabric.hadesgame.server.mixin;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FluidBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,6 +15,10 @@ public abstract class MixinBlocks {
 
     @Inject(method = "register", at = @At("TAIL"))
     private static void onRegister(String id, Block block, CallbackInfoReturnable<Block> cir) {
+        if (block instanceof FluidBlock) {
+            System.out.println("移除流体方块 - " + id);
+            return;
+        }
         BLOCK_WEIGHT_RANDOM_ARRAY_LIST.add(cir.getReturnValue(), 10);
     }
 }
