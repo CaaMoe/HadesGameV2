@@ -223,6 +223,9 @@ public class HadesGame implements ModInitializer {
         // 爬
         GameCore.INSTANCE.eventList.add(new ClimbEvent(), 10);
 
+        // 行为管制
+        GameCore.INSTANCE.eventList.add(new CloseWindowEvent(), 10);
+
         // 删除老的世界
         File file = new File("world");
         try {
