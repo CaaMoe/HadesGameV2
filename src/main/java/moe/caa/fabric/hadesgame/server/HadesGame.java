@@ -212,7 +212,7 @@ public class HadesGame implements ModInitializer {
         GameCore.INSTANCE.eventList.add(new RainBlockEvent(), 5);
 
         // 沧海桑田
-        GameCore.INSTANCE.eventList.add(new TickSpeedUp(), 10);
+        // GameCore.INSTANCE.eventList.add(new TickSpeedUp(), 10);
 
         // 腐蚀
         GameCore.INSTANCE.eventList.add(new CorrosionEvent(), 10);
