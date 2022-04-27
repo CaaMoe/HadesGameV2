@@ -24,7 +24,7 @@ public class CloseWindowEvent extends ImplicitAbstractEvent {
             protected void tick() {
                 count++;
                 GameCore.INSTANCE.survivalPlayerHandler(player -> generate(player));
-                if (count > 20 * 30) cancel();
+                if (count > 20 * 60) cancel();
             }
         };
         HadesGameScheduleManager.runTaskTimer(tick);
