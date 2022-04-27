@@ -110,7 +110,9 @@ public class HadesGameScheduleManager {
         timer.removeIf(AbstractTick::isCancel);
 
         for (AbstractTick tick : timer) {
-            GameCore.INSTANCE.runPrintException(tick, AbstractTick::tick0);
+            if (!tick.isCancel()) {
+                GameCore.INSTANCE.runPrintException(tick, AbstractTick::tick0);
+            }
         }
     }
 

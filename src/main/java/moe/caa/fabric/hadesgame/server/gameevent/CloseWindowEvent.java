@@ -1,5 +1,6 @@
 package moe.caa.fabric.hadesgame.server.gameevent;
 
+import moe.caa.fabric.hadesgame.server.Contains;
 import moe.caa.fabric.hadesgame.server.GameCore;
 import moe.caa.fabric.hadesgame.server.schedule.AbstractTick;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
@@ -17,6 +18,7 @@ public class CloseWindowEvent extends ImplicitAbstractEvent {
 
     @Override
     public void callEvent() {
+        Contains.doNotPickupItem = true;
         AbstractTick tick = new AbstractTick(1) {
             private int count = 0;
 
@@ -24,7 +26,11 @@ public class CloseWindowEvent extends ImplicitAbstractEvent {
             protected void tick() {
                 count++;
                 GameCore.INSTANCE.survivalPlayerHandler(player -> generate(player));
-                if (count > 20 * 60) cancel();
+
+                if (count > 20 * 60) {
+                    Contains.doNotPickupItem = false;
+                    cancel();
+                }
             }
         };
         HadesGameScheduleManager.runTaskTimer(tick);
@@ -37,6 +43,7 @@ public class CloseWindowEvent extends ImplicitAbstractEvent {
 
     @Override
     public void gameEnd() {
+        Contains.doNotPickupItem = false;
         eventTick.forEach(AbstractTick::cancel);
         eventTick.clear();
     }

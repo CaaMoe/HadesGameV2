@@ -15,4 +15,8 @@ public class Contains {
 
     public static boolean climb = false;
 
+    public static boolean doNotPickupItem = false;
+
+    public static boolean riptide = false;
+
 }

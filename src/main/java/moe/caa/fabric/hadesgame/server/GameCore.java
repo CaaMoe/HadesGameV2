@@ -173,10 +173,14 @@ public class GameCore {
         entity.getEnderChestInventory().clear();
         entity.setHealth(20);
         entity.updateLastActionTime();
+        ((IServerPlayer) entity).hg_setLivingFlag(4, false);
+        ((IServerPlayer) entity).hg_setFlag(7, false);
         List<StatusEffectInstance> effects = new ArrayList<>(entity.getStatusEffects());
         for (StatusEffectInstance effect : effects) {
             entity.removeStatusEffect(effect.getEffectType());
         }
+
+        entity.sendAbilitiesUpdate();
     }
 
     // 清理所有游戏状态
