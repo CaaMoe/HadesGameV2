@@ -13,7 +13,6 @@ import net.minecraft.scoreboard.ScoreboardCriterion;
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import sun.misc.Unsafe;
 
@@ -94,7 +93,7 @@ public final class ScoreboardHandler extends AbstractTick {
                     (IScoreboardObjectiveUpdateS2CPacket) (unsafe.allocateInstance(ScoreboardObjectiveUpdateS2CPacket.class));
 
             packet.hg_setName(currentDisplayName);
-            packet.hg_setDisplayName(Text.literal(lastTitle));
+            packet.hg_setDisplayName(new LiteralText(lastTitle));
             packet.hg_setType(ScoreboardCriterion.RenderType.INTEGER);
             packet.hg_setMode(0);
             packet.hg_setHgGamePacket(true);
@@ -117,7 +116,7 @@ public final class ScoreboardHandler extends AbstractTick {
                 IScoreboardObjectiveUpdateS2CPacket packet4 =
                         (IScoreboardObjectiveUpdateS2CPacket) unsafe.allocateInstance(ScoreboardObjectiveUpdateS2CPacket.class);
                 packet4.hg_setName(oldName);
-                packet4.hg_setDisplayName(Text.literal(lastTitle));
+                packet4.hg_setDisplayName(new LiteralText(lastTitle));
                 packet4.hg_setType(ScoreboardCriterion.RenderType.INTEGER);
                 packet4.hg_setMode(1);
                 packet4.hg_setHgGamePacket(true);
