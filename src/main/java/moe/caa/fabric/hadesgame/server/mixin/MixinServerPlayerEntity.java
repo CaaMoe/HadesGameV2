@@ -70,12 +70,11 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity implements IS
                     }
                 }
 
-                int speech = 2;
 
                 final Vec3d pos = getPos();
-                for (int y = (int) (pos.getY()); y < pos.getY() + speech * 2; y++) {
-                    for (int x = (int) (pos.getX() - speech); x < pos.getX() + speech; x++) {
-                        for (int z = (int) (pos.getZ() - speech); z < pos.getZ() + speech; z++) {
+                for (int y = (int) (pos.getY()); y < pos.getY() + 2.5; y++) {
+                    for (int x = (int) (pos.getX() - 1.5); x < pos.getX() + 1.5; x++) {
+                        for (int z = (int) (pos.getZ() - 1.5); z < pos.getZ() + 1.5; z++) {
                             world.breakBlock(new BlockPos(x, y, z), true);
                         }
                     }

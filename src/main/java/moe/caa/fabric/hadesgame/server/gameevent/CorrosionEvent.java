@@ -21,7 +21,7 @@ public class CorrosionEvent extends ImplicitAbstractEvent {
 
     @Override
     public void callEvent() {
-        AbstractTick tick = new AbstractTick(150) {
+        AbstractTick tick = new AbstractTick(80) {
             private int count = 0;
 
             @Override
