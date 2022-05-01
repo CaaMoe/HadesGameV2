@@ -40,7 +40,7 @@ public class GameStartingEvent extends CoreAbstractEvent {
         int[] a = getCenter(serverWorld);
 
         serverWorld.getWorldBorder().setCenter(a[0], a[1]);
-        serverWorld.getWorldBorder().setSize(985);
+        serverWorld.getWorldBorder().setSize(650);
         HadesGame.removeLobbyBlock();
 
         GameCore.INSTANCE.allPlayerHandler(playerEntity -> {

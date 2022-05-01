@@ -11,6 +11,7 @@ import moe.caa.fabric.hadesgame.server.schedule.AbstractTick;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 import moe.caa.fabric.hadesgame.server.scoreboard.ScoreboardHandler;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.network.packet.s2c.play.SubtitleS2CPacket;
 import net.minecraft.network.packet.s2c.play.TitleFadeS2CPacket;
@@ -80,6 +81,8 @@ public class GameCore {
 
         testCallEvent();
         updateScoreboardContent();
+
+        giveSpectatorNightVision();
     }
 
     private void clearWorld() {
@@ -161,6 +164,17 @@ public class GameCore {
                 (int) HadesGame.server.get().getOverworld().getWorldBorder().getSize(),
                 ""
         );
+    }
+
+    public void giveSpectatorNightVision() {
+        allPlayerHandler(p -> {
+            if (p.interactionManager.getGameMode() == GameMode.SPECTATOR) {
+                final StatusEffectInstance statusEffect = p.getStatusEffect(StatusEffects.NIGHT_VISION);
+                if (statusEffect == null) {
+                    p.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false));
+                }
+            }
+        });
     }
 
     // 清理游戏状态
