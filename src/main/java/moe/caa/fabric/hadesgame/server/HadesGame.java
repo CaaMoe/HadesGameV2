@@ -166,7 +166,7 @@ public class HadesGame implements ModInitializer {
         scoreboardTemp.add("\u00a7a边界: \u00a7c{4}");
         scoreboardTemp.add("   ");
         scoreboardTemp.add("\u00a77{5}");
-        scoreboardTemp.add("\u00a7e哼哼啊啊啊啊啊啊啊");
+        scoreboardTemp.add("\u00a7e(=・ω・=)");
 
 
         // 设置计分板内容
