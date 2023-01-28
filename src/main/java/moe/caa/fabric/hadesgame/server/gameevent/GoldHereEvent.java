@@ -50,12 +50,14 @@ public class GoldHereEvent extends ImplicitAbstractEvent{
 
                     GameCore.INSTANCE.playSound(p, SoundEvents.BLOCK_STONE_PLACE, SoundCategory.AMBIENT, 1, 1);
                     //防止玩家在同一个位置刷矿
-                    if(location.equals(lastPosMap.get(p)))
+                    if(!location.equals(lastPosMap.get(p)))
                     {
                         lastPosMap.put(p,location);
+                        world.breakBlock(location,false);
                         world.setBlockState(location, block.getDefaultState());
                         world.updateNeighbors(location, block);
                         HadesGameScheduleManager.runTaskLater(()->{
+                            world.breakBlock(location,false);
                             world.setBlockState(location, Blocks.LAVA.getDefaultState());
                             world.updateNeighbors(location, Blocks.LAVA);
                         },20 * 4);
