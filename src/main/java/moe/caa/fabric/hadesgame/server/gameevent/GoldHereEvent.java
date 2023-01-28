@@ -50,7 +50,7 @@ public class GoldHereEvent extends ImplicitAbstractEvent{
 
                     GameCore.INSTANCE.playSound(p, SoundEvents.BLOCK_STONE_PLACE, SoundCategory.AMBIENT, 1, 1);
                     //防止玩家在同一个位置刷矿
-                    if(location != lastPosMap.get(p))
+                    if(location.equals(lastPosMap.get(p)))
                     {
                         lastPosMap.put(p,location);
                         world.setBlockState(location, block.getDefaultState());
