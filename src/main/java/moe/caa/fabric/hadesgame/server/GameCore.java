@@ -12,7 +12,6 @@ import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 import moe.caa.fabric.hadesgame.server.scoreboard.ScoreboardHandler;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.network.packet.s2c.play.SubtitleS2CPacket;
 import net.minecraft.network.packet.s2c.play.TitleFadeS2CPacket;
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
@@ -21,7 +20,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
@@ -138,7 +136,7 @@ public class GameCore {
                     runPrintException(nextEvent, AbstractEvent::callEvent);
                 } else {
                     allPlayerHandler(p -> {
-                        p.sendMessage(new LiteralText("\u00a7c\u00a7lFAKE EVENT"), true);
+                        p.sendMessage(Text.literal("\u00a7c\u00a7lFAKE EVENT"), true);
                     });
                 }
                 if (nextEvent.SHOULD_COUNTDOWN)
@@ -210,8 +208,7 @@ public class GameCore {
 
     // 播放声音
     public void playSound(ServerPlayerEntity entity, SoundEvent sound, SoundCategory category, float volume, float pitch) {
-        entity.networkHandler.sendPacket(new PlaySoundS2CPacket(sound, category, entity.getPos().x,
-                entity.getPos().y, entity.getPos().z, volume, pitch));
+        entity.playSound(sound, category, volume, pitch);
     }
 
     // 传送
@@ -254,7 +251,7 @@ public class GameCore {
     public void forceEndGame() {
         GameCore.INSTANCE.currentState = GameState.WAITING;
         setEvent(new GameWaitingEvent());
-        allPlayerHandler(playerEntity -> sendTitle(playerEntity, new LiteralText("\u00a7cFBI WARNING"), new LiteralText("\u00a7e游戏已被强制终止"), 0, 20, 20));
+        allPlayerHandler(playerEntity -> sendTitle(playerEntity, Text.literal("\u00a7cFBI WARNING"), Text.literal("\u00a7e游戏已被强制终止"), 0, 20, 20));
 
         for (WeightRandomArrayList.Entry<AbstractEvent> entry : eventList.resource) {
             entry.value.gameEnd();
@@ -268,9 +265,9 @@ public class GameCore {
         ServerPlayerEntity target = getSurvivalPlayers().stream().findFirst().orElse(null);
 
         allPlayerHandler(p -> {
-            p.sendMessage(new LiteralText("\u00a7c\u00a7l游戏结束"), false);
-            p.sendMessage(new LiteralText("\u00a7a赢家： \u00a7c" + (target == null ? "无" : target.getName().getString())), false);
-            sendTitle(p, new LiteralText("\u00a7c游戏结束"), new LiteralText("\u00a7a赢家： \u00a7c" + (target == null ? "无" : target.getName().getString())), 0, 20, 20);
+            p.sendMessage(Text.literal("\u00a7c\u00a7l游戏结束"), false);
+            p.sendMessage(Text.literal("\u00a7a赢家： \u00a7c" + (target == null ? "无" : target.getName().getString())), false);
+            sendTitle(p, Text.literal("\u00a7c游戏结束"), Text.literal("\u00a7a赢家： \u00a7c" + (target == null ? "无" : target.getName().getString())), 0, 20, 20);
             GameCore.INSTANCE.playSound(p, SoundEvents.ENTITY_ENDER_DRAGON_AMBIENT, SoundCategory.PLAYERS, 10, 1);
             clearState(p, GameMode.SPECTATOR);
         });
@@ -350,7 +347,7 @@ public class GameCore {
                     if (livingEntity.isDead()) {
                         ((ServerPlayerEntity) livingEntity).getInventory().dropAll();
                         clearState((ServerPlayerEntity) livingEntity, GameMode.SPECTATOR);
-                        sendAllMessage(new LiteralText("\u00a7e" + livingEntity.getDisplayName().getString() + " \u00a7c死了"));
+                        sendAllMessage(Text.literal("\u00a7e" + livingEntity.getDisplayName().getString() + " \u00a7c死了"));
 
                         if (livingEntity.getY() < -64) {
                             teleport((ServerPlayerEntity) livingEntity, new Location(new Vec3d(livingEntity.getX(), 200, livingEntity.getZ()), world, 0, 0));

@@ -13,7 +13,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -45,9 +44,6 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity implements IS
         super.setFlag(index, value);
     }
 
-    @Shadow
-    public abstract ServerWorld getWorld();
-
     @Inject(method = "tick", at = @At("HEAD"))
     public void onTick(CallbackInfo ci) {
         tickNumRiptide++;
@@ -75,7 +71,7 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity implements IS
                 for (int y = (int) (pos.getY()); y < pos.getY() + 2.5; y++) {
                     for (int x = (int) (pos.getX() - 1.5); x < pos.getX() + 1.5; x++) {
                         for (int z = (int) (pos.getZ() - 1.5); z < pos.getZ() + 1.5; z++) {
-                            world.breakBlock(new BlockPos(x, y, z), true);
+                            getWorld().breakBlock(new BlockPos(x, y, z), true);
                         }
                     }
                 }

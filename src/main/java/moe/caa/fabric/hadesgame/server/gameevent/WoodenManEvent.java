@@ -36,7 +36,7 @@ public class WoodenManEvent extends ImplicitAbstractEvent{
                 {
                     for (ServerPlayerEntity p : GameCore.INSTANCE.getSurvivalPlayers())
                     {
-                        GameCore.INSTANCE.playSound(p, SoundEvents.BLOCK_NOTE_BLOCK_CHIME, SoundCategory.AMBIENT, 1, 1);
+                        GameCore.INSTANCE.playSound(p, SoundEvents.BLOCK_NOTE_BLOCK_CHIME.value(), SoundCategory.AMBIENT, 1, 1);
                     }
                 }else{
                     for (ServerPlayerEntity p : GameCore.INSTANCE.getSurvivalPlayers())

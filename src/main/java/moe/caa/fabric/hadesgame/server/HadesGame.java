@@ -95,10 +95,10 @@ public class HadesGame implements ModInitializer {
             // 大厅墙壁
             for (int i = -10; i < 10; i++) {
                 for (int y = 300; y < 308; y++) {
-                    world.setBlockState(new BlockPos(x + i, y, z + 10), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(x + i, y, z - 10), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(x + 10, y, z + i), Blocks.BARRIER.getDefaultState());
-                    world.setBlockState(new BlockPos(x - 10, y, z + i), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos((int) (x + i), y, (int) (z + 10)), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos((int) (x + i), y, (int) (z - 10)), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos((int) (x + 10), y, (int) (z + i)), Blocks.BARRIER.getDefaultState());
+                    world.setBlockState(new BlockPos((int) (x - 10), y, (int) (z + i)), Blocks.BARRIER.getDefaultState());
                 }
             }
         });
@@ -123,10 +123,10 @@ public class HadesGame implements ModInitializer {
         // 大厅墙壁
         for (int i = -10; i < 10; i++) {
             for (int y = 300; y < 308; y++) {
-                world.setBlockState(new BlockPos(x + i, y, z + 10), Blocks.AIR.getDefaultState());
-                world.setBlockState(new BlockPos(x + i, y, z - 10), Blocks.AIR.getDefaultState());
-                world.setBlockState(new BlockPos(x + 10, y, z + i), Blocks.AIR.getDefaultState());
-                world.setBlockState(new BlockPos(x - 10, y, z + i), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos((int) (x + i), y, (int) (z + 10)), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos((int) (x + i), y, (int) (z - 10)), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos((int) (x + 10), y, ((int) (z + i))), Blocks.AIR.getDefaultState());
+                world.setBlockState(new BlockPos((int) (x - 10), y, ((int) (z + i))), Blocks.AIR.getDefaultState());
             }
         }
     }
@@ -153,20 +153,20 @@ public class HadesGame implements ModInitializer {
         GameCore.INSTANCE.init();
 
         // 设置计分板标题
-        ScoreboardHandler.INSTANCE.currentTitle = "\u00a7e\u00a7l阴间游戏";
+        ScoreboardHandler.INSTANCE.currentTitle = "§e§l阴间游戏";
 
         // 设置动态模板
-        scoreboardTemp.add("\u00a77{0} ");
+        scoreboardTemp.add("§7{0} ");
         scoreboardTemp.add("");
-        scoreboardTemp.add("\u00a7f下一事件:");
-        scoreboardTemp.add("\u00a7a{1}  \u00a77{2}");
+        scoreboardTemp.add("§f下一事件:");
+        scoreboardTemp.add("§a{1}  §7{2}");
         scoreboardTemp.add(" ");
-        scoreboardTemp.add("\u00a7a存活: \u00a7c{3}");
+        scoreboardTemp.add("§a存活: §c{3}");
         scoreboardTemp.add("  ");
-        scoreboardTemp.add("\u00a7a边界: \u00a7c{4}");
+        scoreboardTemp.add("§a边界: §c{4}");
         scoreboardTemp.add("   ");
-        scoreboardTemp.add("\u00a77{5}");
-        scoreboardTemp.add("\u00a7e(=・ω・=)");
+        scoreboardTemp.add("§7{5}");
+        scoreboardTemp.add("§e(●'◡'●)");
 
 
         // 设置计分板内容

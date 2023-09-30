@@ -5,11 +5,12 @@ import moe.caa.fabric.hadesgame.server.IItemEntityHandler;
 import moe.caa.fabric.hadesgame.server.IServerWorldHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.profiler.Profiler;
-import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.MutableWorldProperties;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
@@ -28,8 +29,8 @@ public abstract class MixinServerWorld extends World implements IServerWorldHand
     private boolean hg_tripleDrop = false;
     private boolean hg_randomDrop = false;
 
-    protected MixinServerWorld(MutableWorldProperties properties, RegistryKey<World> registryRef, RegistryEntry<DimensionType> registryEntry, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long seed) {
-        super(properties, registryRef, registryEntry, profiler, isClient, debugWorld, seed);
+    protected MixinServerWorld(MutableWorldProperties properties, RegistryKey<World> registryRef, DynamicRegistryManager registryManager, RegistryEntry<DimensionType> dimensionEntry, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long biomeAccess, int maxChainedNeighborUpdates) {
+        super(properties, registryRef, registryManager, dimensionEntry, profiler, isClient, debugWorld, biomeAccess, maxChainedNeighborUpdates);
     }
 
 
@@ -56,7 +57,7 @@ public abstract class MixinServerWorld extends World implements IServerWorldHand
         Vec3d vec3d = entity.getVelocity();
         if (hg_tripleDrop && entity instanceof ItemEntity && !((IItemEntityHandler) entity).hg_isModSpawn()) {
             for (int i = 0; i < 3; i++) {
-                ItemEntity itemEntity = new ItemEntity(entity.world, entity.getX(), entity.getY(), entity.getZ(), ((ItemEntity) entity).getStack());
+                ItemEntity itemEntity = new ItemEntity(entity.getWorld(), entity.getX(), entity.getY(), entity.getZ(), ((ItemEntity) entity).getStack());
                 ((IItemEntityHandler) itemEntity).hg_setModSpawn(true);
                 itemEntity.setPickupDelay(((IItemEntityHandler) entity).hg_getPickupDelay());
                 itemEntity.setVelocity(vec3d);

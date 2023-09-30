@@ -8,6 +8,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class RainAnvilEvent extends ImplicitAbstractEvent {
     }
 
     public void generateAnvil(ServerPlayerEntity entity) {
-        ServerWorld world = entity.getWorld();
+        World world = entity.getWorld();
         final int x = (int) entity.getX() + (int) (Math.random() * 8) - 4;
         final int z = (int) entity.getZ() + (int) (Math.random() * 8) - 4;
 

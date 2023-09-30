@@ -2,8 +2,8 @@ package moe.caa.fabric.hadesgame.server.fabric.customevent;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.network.Packet;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.network.ClientConnection;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.util.ActionResult;
 
 public abstract class PacketSendEvent {
@@ -19,7 +19,7 @@ public abstract class PacketSendEvent {
 
     @FunctionalInterface
     public interface PacketSendCallback {
-        ActionResult callback(ServerPlayerEntity playerEntity, Packet<?> packet);
+        ActionResult callback(ClientConnection playerEntity, Packet<?> packet);
     }
 }
 

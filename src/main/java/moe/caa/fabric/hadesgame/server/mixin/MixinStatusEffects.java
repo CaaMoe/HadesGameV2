@@ -12,11 +12,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinStatusEffects {
 
     @Inject(method = "register", at = @At("TAIL"))
-    private static void onRegister(int rawId, String id, StatusEffect entry, CallbackInfoReturnable<StatusEffect> cir) {
+    private static void onRegister(String id, StatusEffect statusEffect, CallbackInfoReturnable<StatusEffect> cir) {
         // 7  instant_damage 瞬间伤害
         // 20 wither 凋零
-        if (rawId == 7 || rawId == 20) {
-            System.out.println("移除效果 - " + id);
+        if (id.equals("wither") || id.equals("instant_damage")) {
             return;
         }
 

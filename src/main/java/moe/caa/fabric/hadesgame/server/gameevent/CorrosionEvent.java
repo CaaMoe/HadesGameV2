@@ -8,6 +8,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class CorrosionEvent extends ImplicitAbstractEvent {
     }
 
     public void corrosion(ServerPlayerEntity entity) {
-        ServerWorld world = entity.getWorld();
+        World world = entity.getWorld();
         final Vec3d pos = entity.getPos();
 
         int speech = 2;

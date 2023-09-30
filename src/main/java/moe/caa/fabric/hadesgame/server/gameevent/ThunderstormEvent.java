@@ -45,15 +45,15 @@ public class ThunderstormEvent extends ImplicitAbstractEvent {
         double z = player.getPos().z - 2 + random.nextInt(4);
         NbtCompound nbt = new NbtCompound();
 
-        int y = player.world.getTopY(Heightmap.Type.MOTION_BLOCKING, (int) x, (int) z);
+        int y = player.getWorld().getTopY(Heightmap.Type.MOTION_BLOCKING, (int) x, (int) z);
 
         nbt.putString("id", "minecraft:lightning_bolt");
-        Entity entity2 = EntityType.loadEntityWithPassengers(nbt, player.world, (entity) -> {
+        Entity entity2 = EntityType.loadEntityWithPassengers(nbt, player.getWorld(), (entity) -> {
             entity.refreshPositionAndAngles(x, y, z, entity.prevYaw, entity.prevPitch);
             return entity;
         });
 
-        ((ServerWorld) player.world).spawnNewEntityAndPassengers(entity2);
+        ((ServerWorld) player.getWorld()).spawnNewEntityAndPassengers(entity2);
     }
 
 

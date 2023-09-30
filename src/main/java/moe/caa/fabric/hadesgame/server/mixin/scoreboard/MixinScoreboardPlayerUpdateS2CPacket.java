@@ -4,10 +4,7 @@ import moe.caa.fabric.hadesgame.server.scoreboard.IScoreboardPlayerUpdateS2CPack
 import net.minecraft.network.packet.s2c.play.ScoreboardPlayerUpdateS2CPacket;
 import net.minecraft.scoreboard.ServerScoreboard;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 
 @Mixin(ScoreboardPlayerUpdateS2CPacket.class)
 public abstract class MixinScoreboardPlayerUpdateS2CPacket implements IScoreboardPlayerUpdateS2CPacket {
@@ -28,7 +25,8 @@ public abstract class MixinScoreboardPlayerUpdateS2CPacket implements IScoreboar
     @Mutable
     @Shadow
     @Final
-    private ServerScoreboard.UpdateMode mode;
+    private ServerScoreboard.UpdateMode updateMode;
+    @Unique
     private boolean hg_gamePacket = false;
 
     @Override
@@ -72,11 +70,11 @@ public abstract class MixinScoreboardPlayerUpdateS2CPacket implements IScoreboar
 
     @Override
     public ServerScoreboard.UpdateMode hg_getMode() {
-        return mode;
+        return updateMode;
     }
 
     @Override
     public void hg_setMode(ServerScoreboard.UpdateMode mode) {
-        this.mode = mode;
+        this.updateMode = mode;
     }
 }

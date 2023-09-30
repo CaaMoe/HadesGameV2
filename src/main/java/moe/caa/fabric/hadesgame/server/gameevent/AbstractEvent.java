@@ -36,7 +36,7 @@ public abstract class AbstractEvent {
             case 2:
             case 1:
                 GameCore.INSTANCE.allPlayerHandler(playerEntity -> {
-                    GameCore.INSTANCE.playSound(playerEntity, SoundEvents.BLOCK_NOTE_BLOCK_HAT, SoundCategory.PLAYERS, 10, 1);
+                    GameCore.INSTANCE.playSound(playerEntity, SoundEvents.BLOCK_NOTE_BLOCK_HAT.value(), SoundCategory.PLAYERS, 10, 1);
                 });
 
         }

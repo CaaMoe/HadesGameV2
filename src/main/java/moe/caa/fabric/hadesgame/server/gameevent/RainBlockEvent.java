@@ -9,6 +9,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class RainBlockEvent extends ImplicitAbstractEvent {
     }
 
     public void generateBlock(ServerPlayerEntity entity) {
-        ServerWorld world = entity.getWorld();
+        World world = entity.getWorld();
         final int x = (int) entity.getX() + (int) (Math.random() * 8) - 4;
         final int z = (int) entity.getZ() + (int) (Math.random() * 8) - 4;
         int spawnY = (int) Math.max(entity.getY() + 10, world.getTopY(Heightmap.Type.MOTION_BLOCKING, x, z) + 10);

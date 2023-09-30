@@ -2,21 +2,20 @@ package moe.caa.fabric.hadesgame.server.mixin.scoreboard;
 
 import moe.caa.fabric.hadesgame.server.scoreboard.IScoreboardDisplayS2CPacket;
 import net.minecraft.network.packet.s2c.play.ScoreboardDisplayS2CPacket;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
+import net.minecraft.scoreboard.ScoreboardDisplaySlot;
+import org.spongepowered.asm.mixin.*;
 
 @Mixin(ScoreboardDisplayS2CPacket.class)
 public abstract class MixinScoreboardDisplayS2CPacket implements IScoreboardDisplayS2CPacket {
     @Mutable
     @Shadow
     @Final
-    private int slot;
+    private ScoreboardDisplaySlot slot;
     @Mutable
     @Shadow
     @Final
     private String name;
+    @Unique
     private boolean hg_gamePacket = false;
 
     @Override
@@ -29,12 +28,7 @@ public abstract class MixinScoreboardDisplayS2CPacket implements IScoreboardDisp
     }
 
     @Override
-    public int hg_getSlot() {
-        return slot;
-    }
-
-    @Override
-    public void hg_setSlot(int slot) {
+    public void hg_setSlot(ScoreboardDisplaySlot slot) {
         this.slot = slot;
     }
 

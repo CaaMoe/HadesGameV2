@@ -18,7 +18,7 @@ public class Location {
     }
 
     public static Location valueOf(LivingEntity entity) {
-        return new Location(entity.getPos(), (ServerWorld) entity.world, entity.bodyYaw, entity.prevPitch);
+        return new Location(entity.getPos(), (ServerWorld) entity.getWorld(), entity.bodyYaw, entity.prevPitch);
     }
 
     @Override
