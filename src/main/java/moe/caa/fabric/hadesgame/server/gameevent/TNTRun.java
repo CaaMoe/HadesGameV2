@@ -3,12 +3,9 @@ package moe.caa.fabric.hadesgame.server.gameevent;
 import moe.caa.fabric.hadesgame.server.GameCore;
 import moe.caa.fabric.hadesgame.server.schedule.AbstractTick;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -35,7 +32,10 @@ public class TNTRun extends ImplicitAbstractEvent{
                     World world = p.getWorld();
                     BlockState state = world.getBlockState(location);
                     if (state == null || state.getBlock() == Blocks.AIR) continue;
-                    world.breakBlock(location, true);
+                    HadesGameScheduleManager.runTaskLater(() -> {
+                        world.breakBlock(location, true);
+                    }, 5);
+
                 }
             }
         };
