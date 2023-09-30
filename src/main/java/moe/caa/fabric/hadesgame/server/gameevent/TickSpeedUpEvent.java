@@ -3,9 +3,9 @@ package moe.caa.fabric.hadesgame.server.gameevent;
 import moe.caa.fabric.hadesgame.server.Contains;
 import moe.caa.fabric.hadesgame.server.schedule.HadesGameScheduleManager;
 
-public class TickSpeedUp extends ImplicitAbstractEvent {
+public class TickSpeedUpEvent extends ImplicitAbstractEvent {
 
-    public TickSpeedUp() {
+    public TickSpeedUpEvent() {
         super("tickSpeedUp", "沧海桑田", true, 30, 100);
     }
 

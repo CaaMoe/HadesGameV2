@@ -31,16 +31,14 @@ public class WoodenManEvent extends ImplicitAbstractEvent{
             @Override
             protected void tick() {
                 if(count++ >= 15) this.cancel();
+
                 int randomInt = random.nextInt(100);
-                if(randomInt < 70) // 可以动
-                {
-                    for (ServerPlayerEntity p : GameCore.INSTANCE.getSurvivalPlayers())
-                    {
+                if(randomInt < 70) {
+                    for (ServerPlayerEntity p : GameCore.INSTANCE.getSurvivalPlayers()) {
                         GameCore.INSTANCE.playSound(p, SoundEvents.BLOCK_NOTE_BLOCK_CHIME.value(), SoundCategory.AMBIENT, 1, 1);
                     }
-                }else{
-                    for (ServerPlayerEntity p : GameCore.INSTANCE.getSurvivalPlayers())
-                    {
+                } else{
+                    for (ServerPlayerEntity p : GameCore.INSTANCE.getSurvivalPlayers()) {
                         GameCore.INSTANCE.playSound(p, SoundEvents.ENTITY_WITHER_HURT, SoundCategory.AMBIENT, 1, 1);
                     }
                     moveCheck();
@@ -56,8 +54,7 @@ public class WoodenManEvent extends ImplicitAbstractEvent{
         eventTick.forEach(AbstractTick::cancel);
         eventTick.clear();
     }
-    void moveCheck()
-    {
+    void moveCheck() {
         Map<ServerPlayerEntity, Vec3d> playerLocMap = new HashMap<>();
         AbstractTick tick = new AbstractTick(5) {
             int count = 0;
@@ -65,15 +62,11 @@ public class WoodenManEvent extends ImplicitAbstractEvent{
             protected void tick() {
                 if(count++ >= 12)this.cancel();
 
-                for(ServerPlayerEntity p : GameCore.INSTANCE.getSurvivalPlayers())
-                {
+                for(ServerPlayerEntity p : GameCore.INSTANCE.getSurvivalPlayers()) {
                     if(!playerLocMap.containsKey(p))playerLocMap.put(p,p.getPos());
-                    if(!playerLocMap.get(p).equals(p.getPos()))
-                    {
+                    if(!playerLocMap.get(p).equals(p.getPos())) {
                         p.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 60,1));
-                    }
-                    else
-                    {
+                    } else {
                         p.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 25,1));
                     }
                 }

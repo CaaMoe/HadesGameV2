@@ -12,10 +12,10 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TNTRun extends ImplicitAbstractEvent{
+public class TNTRunEvent extends ImplicitAbstractEvent{
     private final List<AbstractTick> eventTick = new ArrayList<>();
 
-    public TNTRun() {
+    public TNTRunEvent() {
         super("tntRun", "梯恩梯润", true, 30, 100);
     }
 
