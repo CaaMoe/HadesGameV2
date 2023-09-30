@@ -232,6 +232,7 @@ public class HadesGame implements ModInitializer {
         // 木头人
 
         GameCore.INSTANCE.eventList.add(new WoodenManEvent(),10);
+        GameCore.INSTANCE.eventList.add(new TNTRun(),10);
 
         // 删除老的世界
         File file = new File("world");

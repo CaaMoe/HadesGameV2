@@ -31,9 +31,8 @@ public class GoldHereEvent extends ImplicitAbstractEvent{
             int count = 0;
             @Override
             protected void tick() {
-                for (ServerPlayerEntity p : GameCore.INSTANCE.getSurvivalPlayers())
-                {
-                    if(count++ >= 60)this.cancel();
+                if(count++ >= 60)this.cancel();
+                for (ServerPlayerEntity p : GameCore.INSTANCE.getSurvivalPlayers()) {
                     BlockPos location = p.getBlockPos().add(0,-1,0);
                     World world = p.getWorld();
 
