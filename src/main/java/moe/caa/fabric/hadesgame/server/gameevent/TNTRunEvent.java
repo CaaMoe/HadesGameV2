@@ -21,12 +21,12 @@ public class TNTRunEvent extends ImplicitAbstractEvent{
 
     @Override
     public void callEvent() {
-        AbstractTick tick = new AbstractTick(10) {
+        AbstractTick tick = new AbstractTick(5) {
             int count = 0;
 
             @Override
             protected void tick() {
-                if (count++ >= 60) this.cancel();
+                if (count++ >= 120) this.cancel();
                 for (ServerPlayerEntity p : GameCore.INSTANCE.getSurvivalPlayers()) {
                     BlockPos location = p.getBlockPos().add(0, -1, 0);
                     World world = p.getWorld();
